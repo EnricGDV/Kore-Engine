@@ -25,7 +25,7 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Init()
 {
-	//IMGUI_CHECKVERSION();
+	IMGUI_CHECKVERSION();
 
 	return true;
 }
