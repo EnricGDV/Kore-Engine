@@ -4,6 +4,12 @@
 #include "Module.h"
 #include "Libraries/SDL/include/SDL.h"
 
+#include <GL/glew.h>
+
+#include "Libraries/ImGui/imgui.h"
+#include "Libraries/ImGui/imgui_impl_sdl.h"
+#include "Libraries/ImGui/imgui_impl_opengl3.h"
+
 class Application;
 
 class ModuleUI : public Module
@@ -24,6 +30,9 @@ public:
 
 
 public:
+
+
+	ImFont* font;
 
 };
 
