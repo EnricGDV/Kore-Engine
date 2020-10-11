@@ -46,6 +46,7 @@ bool Application::Init()
 	bool ret = true;
 
 	// Call Init() in all modules
+
 	std::list<Module*>::iterator item = list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
@@ -63,7 +64,7 @@ bool Application::Init()
 		ret = (*item)->Start();
 		item++;
 	}
-	
+
 	ms_timer.Start();
 	return ret;
 }
@@ -72,6 +73,11 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
+	fps.push_back(1.0f / dt);
+	if (fps.size() > FPS_LOG_SIZE)
+	{
+		fps.erase(fps.begin());
+	}
 	ms_timer.Start();
 }
 
@@ -124,10 +130,16 @@ bool Application::CleanUp()
 		ret = (*item)->CleanUp();
 		item++;
 	}
+
 	return ret;
 }
 
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+void Application::RequestBrowser(const char* URL)
+{
+	ShellExecuteA(NULL, "open", URL, NULL, NULL, SW_SHOWNORMAL);
 }

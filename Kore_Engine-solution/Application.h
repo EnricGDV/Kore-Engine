@@ -10,8 +10,11 @@
 #include "ModuleCamera3D.h"
 #include "ModuleUI.h"
 
+
 #include <iostream>
 #include <list>
+
+using namespace std;
 
 class Application
 {
@@ -27,7 +30,7 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
-	std::list<Module*> list_modules;
+	list<Module*> list_modules;
 
 public:
 
@@ -37,6 +40,10 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+
+	void RequestBrowser(const char* URL);
+
+	vector<float> fps;
 
 private:
 
