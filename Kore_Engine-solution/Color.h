@@ -32,5 +32,5 @@ extern Color Black;
 extern Color White;
 extern Color Grey;
 extern Color Yellow;
-extern Color TransparentGreen;
 extern Color Maroon;
+extern Color Pink;

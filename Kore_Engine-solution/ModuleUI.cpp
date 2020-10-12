@@ -119,8 +119,6 @@ update_status ModuleUI::Update(float dt)
 	// Rendering
 	/*ImGui::Render();
 	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-	glClear(GL_COLOR_BUFFER_BIT);
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
 
 
@@ -134,6 +132,12 @@ update_status ModuleUI::PostUpdate(float dt)
 	
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleUI::Draw()
+{
+	//ImGui::Render();
+	//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 // Called before quitting

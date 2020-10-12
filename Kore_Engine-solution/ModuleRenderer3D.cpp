@@ -1,7 +1,11 @@
+#include "Color.h"
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "Libraries\SDL\include\SDL_opengl.h"
+#include "ModuleUI.h"
+#include "ModuleSceneIntro.h"
+#include "Libraries/Glew/include/GL/glew.h"
+#include "Libraries/SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -32,9 +36,20 @@ bool ModuleRenderer3D::Init()
 	
 	if(ret == true)
 	{
+		
+		//LOG GL Properties
+		LOG("Vendor: %s", glGetString(GL_VENDOR));
+		LOG("Renderer: %s", glGetString(GL_RENDERER));
+		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+
+		//Initialize Glew
+		GLenum err = glewInit();
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -65,6 +80,7 @@ bool ModuleRenderer3D::Init()
 		
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Check for error
 		error = glGetError();
@@ -94,6 +110,7 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -105,6 +122,8 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	Color c = Black;
+	glClearColor(c.r, c.g, c.b, c.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -123,6 +142,15 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	App->scene_intro->Draw();
+	if (debug_draw == true)
+	{
+		/*BeginDebugDraw();
+		App->DebugDraw();
+		EndDebugDraw();*/
+	}
+
+	App->ui->Draw();
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

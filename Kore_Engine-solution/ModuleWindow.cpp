@@ -38,7 +38,6 @@ bool ModuleWindow::Init()
 		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-		SDL_GL_SetSwapInterval(1); //enable vsync
 
 		if(WIN_FULLSCREEN == true)
 		{

@@ -34,10 +34,16 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0.0f, 1.0f, 0.0f, 0.0f);
+	p = { 0.0f, 1.0f, 0.0f, 0.0f };
 
 	p.axis = true;
-	p.Render();
+	p.color = White;
+	
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneIntro::Draw()
+{
+	p.Render();
 }

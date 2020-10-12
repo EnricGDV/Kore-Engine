@@ -23,11 +23,11 @@ Application::Application()
 
 	// Scenes
 	AddModule(scene_intro);
-	
+	AddModule(ui);
 
 	// Renderer last!
 	AddModule(renderer3D);
-	AddModule(ui);
+	
 }
 
 Application::~Application()
