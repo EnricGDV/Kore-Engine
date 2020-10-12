@@ -37,7 +37,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	p = { 0.0f, 1.0f, 0.0f, 0.0f };
 
 	p.axis = true;
-	p.color = White;
 	
 
 	return UPDATE_CONTINUE;
