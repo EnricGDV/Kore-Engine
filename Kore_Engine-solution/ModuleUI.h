@@ -32,7 +32,7 @@ public:
 
 public:
 
-
+	bool show_demo_window = false;
 	ImFont* font;
 
 };
