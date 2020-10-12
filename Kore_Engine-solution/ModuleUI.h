@@ -32,8 +32,18 @@ public:
 
 public:
 
-	bool show_demo_window = false;
 	ImFont* font;
+
+	bool demoIsActive = false;
+	bool aboutIsActive = false;
+	bool consoleIsActive = true;
+	bool configIsActive = true;
+
+	//Config
+	char* textname;
+	char* textorganization;
+
+
 
 };
 

@@ -43,6 +43,9 @@ bool ModuleUI::Start()
 	font = io.Fonts->AddFontDefault();
     IM_ASSERT(font != NULL);
 
+	textname = "Kore Engine";
+	textorganization = "UPC CITM";
+
 	return true;
 }
 
@@ -78,35 +81,149 @@ update_status ModuleUI::PreUpdate(float dt)
 update_status ModuleUI::Update(float dt)
 {
 	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
+	if (demoIsActive)
+		ImGui::ShowDemoWindow(&demoIsActive);
 
-	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+	// Show Bar
+	ImGui::BeginMainMenuBar();
+	if (ImGui::BeginMenu("File"))
 	{
-		static float f = 0.0f;
-		static int counter = 0;
-
-		ImGui::Begin("Configuration");                          // Create a window called "Hello, world!" and append into it.
-
-		ImGui::Text("Welcome to Kore Engine");               // Display some text (you can use a format strings too)
-
-		ImGui::SameLine();
-		if (ImGui::Button("Close App"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+		if (ImGui::MenuItem("Quit (ESC)"))
 			App->input->quit = true;
 
-		ImGui::Checkbox("Show Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("View"))
+	{
+		ImGui::Checkbox("Console", &consoleIsActive);
+		ImGui::Checkbox("Configuration", &configIsActive);
+		ImGui::Checkbox("Demo Window", &demoIsActive);      // Edit bools storing our window open/close state
 
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)&Pink); // Edit 3 floats representing a color
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("Help"))
+	{
+		if (ImGui::MenuItem("Documentation"))
+			App->RequestBrowser("https://github.com/EnricGDV/Kore-Engine/wiki");
+		if (ImGui::MenuItem("Download latest"))
+			App->RequestBrowser("https://github.com/EnricGDV/Kore-Engine/releases");
+		if (ImGui::MenuItem("Report a bug"))
+			App->RequestBrowser("https://github.com/EnricGDV/Kore-Engine/issues");
+		if (ImGui::MenuItem("About"))
+			aboutIsActive = true;
 
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
+		ImGui::EndMenu();
+	}
+	ImGui::EndMainMenuBar();
 
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	if (aboutIsActive)
+	{
+		ImGui::Begin("About Kore Engine");
+		ImGui::Text("Kore Engine v0.3");
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::Text("By Enric-G. Duran and Clara Ratera. Supervised by prof. Marc Garrigo");
+		ImGui::Text("3D Engine for the Game Engines Subject at CITM, UPC for educational purposes.");
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		if (ImGui::MenuItem("Go to the GitHub page"))
+			App->RequestBrowser("https://github.com/EnricGDV/Kore-Engine");
+		ImGui::Spacing();
+
+		ImGui::Text("3rd Party Libraries used:");
+		ImGui::BulletText("SDL 2.0.12");
+		ImGui::BulletText("Glew 2.1.0");
+		ImGui::BulletText("ImGui 1.79");
+		ImGui::BulletText("OpenGL 3.1");
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		ImGui::Text("License:");
+		ImGui::Spacing();
+		ImGui::Text("MIT License");
+		ImGui::Spacing();
+		ImGui::Text("Copyright (c) 2020 EnricGDV");
+		ImGui::Spacing();
+		ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files(the 'Software'), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions : ");
+		ImGui::Spacing();
+		ImGui::Text("The above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.");
+		ImGui::Spacing();
+		ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.");
+
 		ImGui::End();
 	}
+
+
+
+	// Show Configuration
+	if (configIsActive)
+	{
+
+		ImGui::Begin("Configuration");
+
+		if (ImGui::BeginMenu("Options"))
+		{
+			if (ImGui::MenuItem("Set Defaults"))
+			{
+
+			}
+
+			if (ImGui::MenuItem("Save"))
+			{
+
+			}
+
+			if (ImGui::MenuItem("Load"))
+			{
+
+			}
+			ImGui::EndMenu();
+		}
+
+		ImGui::Spacing();
+
+		if (ImGui::CollapsingHeader("Application"))
+		{
+			ImGui::InputText("Engine Name", textname, 32);
+			ImGui::InputText("Organization", textorganization, 32);
+			ImGui::SliderInt("Max FPS", &App->max_fps, 0, 200); 
+			ImGui::Spacing();
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		}
+		if (ImGui::CollapsingHeader("Window"))
+		{
+
+		}
+		if (ImGui::CollapsingHeader("File System"))
+		{
+
+		}
+		if (ImGui::CollapsingHeader("Input"))
+		{
+
+		}
+		if (ImGui::CollapsingHeader("Hardware"))
+		{
+
+		}
+
+		
+
+		ImGui::End();
+
+	}
+	
+
+	// Show console
+	if (consoleIsActive)
+	{
+		ImGui::Begin("Console");
+		ImGui::End();
+	}
+	
 
 	return UPDATE_CONTINUE;
 }

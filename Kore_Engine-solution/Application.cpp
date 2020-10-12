@@ -66,6 +66,8 @@ bool Application::Init()
 	}
 
 	ms_timer.Start();
+	max_fps = FPS_LOG_SIZE;
+
 	return ret;
 }
 
@@ -74,7 +76,7 @@ void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
 	fps.push_back(1.0f / dt);
-	if (fps.size() > FPS_LOG_SIZE)
+	if (fps.size() > max_fps)
 	{
 		fps.erase(fps.begin());
 	}

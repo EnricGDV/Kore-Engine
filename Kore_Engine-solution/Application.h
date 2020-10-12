@@ -44,6 +44,7 @@ public:
 	void RequestBrowser(const char* URL);
 
 	vector<float> fps;
+	int max_fps;
 
 private:
 
