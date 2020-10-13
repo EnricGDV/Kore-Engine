@@ -78,6 +78,7 @@ bool ModuleRenderer3D::Init()
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
 		
+		
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -119,6 +120,29 @@ bool ModuleRenderer3D::Init()
 	return ret;
 }
 
+bool ModuleRenderer3D::Start()
+{
+	float cubeArray[] = { -2.f, 0.f, 1.f, -2.f, 0.f, 0.f, -1.f, 0.f, 0.f, -1.f, 0.f, 0.f, -1.f, 0.f, 1.f, -2.f, 0.f, 1.f,
+						  -2.f, 1.f, 0.f, -2.f, 1.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 0.f, -2.f, 1.f, 0.f,
+						  -2.f, 0.f, 0.f, -2.f, 0.f, 1.f, -2.f, 1.f, 1.f, -2.f, 1.f, 1.f, -2.f, 1.f, 0.f, -2.f, 0.f, 0.f,
+						  -1.f, 0.f, 1.f, -1.f, 0.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 1.f, -1.f, 0.f, 1.f,
+						  -2.f, 0.f, 1.f, -1.f, 0.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 1.f, -2.f, 1.f, 1.f, -2.f, 0.f, 1.f,
+						  -2.f, 0.f, 0.f, -2.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 0.f, 0.f, -2.f, 0.f, 0.f };
+	
+	int colorArray[] = { 100, 51, 55 };
+
+	cube_id = 0;
+	glGenBuffers(1, (GLuint*) & (cube_id));
+	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108, cubeArray, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*) & (color_id));
+	glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
+	glBufferData(GL_COLOR_BUFFER_BIT, sizeof(int) * 3, colorArray, GL_STATIC_DRAW);
+
+	return true;
+}
+
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
@@ -129,6 +153,127 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
+
+	/*glBegin(GL_POLYGON);
+	glColor3b(100, 51, 55);
+	glVertex3f(0.f, 0.f, 0.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(0.f, 0.f, 1.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(1.f, 1.f, 1.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(1.f, 1.f, 0.f);
+	glEnd();
+
+	glBegin(GL_TRIANGLE_STRIP);
+	glColor3b(100, 51, 55);
+	glVertex3f(2.f, 2.f, 2.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(2.f, 2.f, 3.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(3.f, 2.f, 2.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(3.f, 2.f, 3.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(4.f, 3.f, 2.f);
+	glColor3b(100, 51, 55);
+	glVertex3f(4.f, 3.f, 3.f);
+	glEnd();*/
+
+
+	//// CUBE
+
+	//glBegin(GL_TRIANGLES);
+	////1stface
+	//
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 1.f);
+
+	////2ndface
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 0.f);
+
+	////3rdface
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 0.f);
+
+	////4thface
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 1.f);
+
+	////5thface
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 1.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 1.f);
+
+	////6thface
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 1.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-1.f, 0.f, 0.f);
+	//glColor3b(100, 51, 55);
+	//glVertex3f(-2.f, 0.f, 0.f);
+
+	//glRotatef(0.5f, 1.f, 1.f, 0.f);
+	//glEnd();
+
+	/////
+
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -149,6 +294,17 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		App->DebugDraw();
 		EndDebugDraw();*/
 	}
+
+
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	//glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
+	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
+	//glColorPointer(3, GL_INT, 0, NULL);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glColor3b(100, 51, 55);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	App->ui->Draw();
 	SDL_GL_SwapWindow(App->window->window);

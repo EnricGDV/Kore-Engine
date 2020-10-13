@@ -13,6 +13,7 @@ public:
 	~ModuleRenderer3D();
 
 	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
@@ -26,5 +27,7 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
+	uint cube_id;
+	uint color_id;
 	bool debug_draw = false;
 };
