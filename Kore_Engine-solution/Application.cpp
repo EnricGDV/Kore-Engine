@@ -76,9 +76,14 @@ void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
 	fps.push_back(1.0f / dt);
-	if (fps.size() > max_fps)
+	if (fps.size() > FPS_LOG_SIZE)
 	{
 		fps.erase(fps.begin());
+	}
+	ms.push_back(ms_timer.Read());
+	if (ms.size() > FPS_LOG_SIZE)
+	{
+		ms.erase(ms.begin());
 	}
 	ms_timer.Start();
 }

@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleUI.h"
 #include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleWindow.h"
 
 #include <GL/glew.h>
 
@@ -191,10 +193,29 @@ update_status ModuleUI::Update(float dt)
 			ImGui::InputText("Organization", textorganization, 32);
 			ImGui::SliderInt("Max FPS", &App->max_fps, 0, 200); 
 			ImGui::Spacing();
+
+			char title[25];
+			sprintf_s(title, 25, "Framerate %.1f", App->fps[App->fps.size() - 1]);
+			ImGui::PlotHistogram("##framerate", &App->fps[0], App->fps.size(), 0, title, 0.0f, 200.0f, ImVec2(310, 100));
+			sprintf_s(title, 25, "Milliseconds %.1f", App->ms[App->ms.size() - 1]);
+			ImGui::PlotHistogram("##milliseconds", &App->ms[0], App->ms.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::Spacing();
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
+			ImGui::Checkbox("Active", &App->input->quit);
+			ImGui::SliderFloat("Brightness", &App->renderer3D->brightness, 0.0f, 1.0f);
+			ImGui::SliderInt("Width", &App->window->width, 0.0f, 1920);
+			ImGui::SliderInt("Height", &App->window->height, 0.0f, 1080);
+			ImGui::Checkbox("Fullscreen", &App->window->fullscreen);
+			ImGui::SameLine();
+			ImGui::Checkbox("Resizable", &App->window->resizable);
+			ImGui::Checkbox("Borderless", &App->window->borderless);
+			ImGui::SameLine();
+			ImGui::Checkbox("Full Desktop", &App->window->fulldesktop);
+			ImGui::Spacing();
 
 		}
 		if (ImGui::CollapsingHeader("File System"))

@@ -45,6 +45,7 @@ public:
 
 	vector<float> fps;
 	int max_fps;
+	vector<float> ms;
 
 private:
 

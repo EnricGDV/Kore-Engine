@@ -115,7 +115,7 @@ bool ModuleRenderer3D::Init()
 	}
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(App->window->width, App->window->height);
 
 	return ret;
 }
@@ -306,7 +306,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 
 
-	glEnableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_VERTEX_ARRAY);
 	//glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
 	//glBindBuffer(GL_ARRAY_BUFFER, cube_id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_id);
@@ -315,7 +315,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//glColor3b(100, 51, 55);
 	//glDrawArrays(GL_TRIANGLES, 0, 36);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 
 	App->ui->Draw();
 	SDL_GL_SwapWindow(App->window->window);

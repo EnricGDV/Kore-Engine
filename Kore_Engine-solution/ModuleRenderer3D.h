@@ -30,5 +30,6 @@ public:
 	uint cube_id;
 	uint index_id;
 	uint color_id;
+	float brightness = 1.f;
 	bool debug_draw = false;
 };
