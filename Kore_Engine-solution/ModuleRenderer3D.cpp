@@ -122,20 +122,29 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	float cubeArray[] = { -2.f, 0.f, 1.f, -2.f, 0.f, 0.f, -1.f, 0.f, 0.f, -1.f, 0.f, 0.f, -1.f, 0.f, 1.f, -2.f, 0.f, 1.f,
-						  -2.f, 1.f, 0.f, -2.f, 1.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 0.f, -2.f, 1.f, 0.f,
-						  -2.f, 0.f, 0.f, -2.f, 0.f, 1.f, -2.f, 1.f, 1.f, -2.f, 1.f, 1.f, -2.f, 1.f, 0.f, -2.f, 0.f, 0.f,
-						  -1.f, 0.f, 1.f, -1.f, 0.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 1.f, -1.f, 0.f, 1.f,
-						  -2.f, 0.f, 1.f, -1.f, 0.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 1.f, -2.f, 1.f, 1.f, -2.f, 0.f, 1.f,
-						  -2.f, 0.f, 0.f, -2.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 0.f, 0.f, -2.f, 0.f, 0.f };
+	//float cubeArray[] = { -2.f, 0.f, 1.f, -2.f, 0.f, 0.f, -1.f, 0.f, 0.f, -1.f, 0.f, 0.f, -1.f, 0.f, 1.f, -2.f, 0.f, 1.f,
+	//					  -2.f, 1.f, 0.f, -2.f, 1.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 0.f, -2.f, 1.f, 0.f,
+	//					  -2.f, 0.f, 0.f, -2.f, 0.f, 1.f, -2.f, 1.f, 1.f, -2.f, 1.f, 1.f, -2.f, 1.f, 0.f, -2.f, 0.f, 0.f,
+	//					  -1.f, 0.f, 1.f, -1.f, 0.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 1.f, -1.f, 0.f, 1.f,
+	//					  -2.f, 0.f, 1.f, -1.f, 0.f, 1.f, -1.f, 1.f, 1.f, -1.f, 1.f, 1.f, -2.f, 1.f, 1.f, -2.f, 0.f, 1.f,
+	//					  -2.f, 0.f, 0.f, -2.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 0.f, 0.f, -2.f, 0.f, 0.f };
 	
+
+	float cubeArray[] = { -2.f, 0.f, 0.f,  -1.f, 0.f, 0.f,  -1.f, 0.f, 1.f,  -2.f, 0.f, 1.f,  -2.f, 1.f, 0.f,  -1.f, 1.f, 0.f,  -1.f, 1.f, 1.f,  -2.f, 1.f, 1.f };
+	uint cubeIndex[] = {4, 1, 2, 2, 3, 4,   5, 8, 7, 7, 6, 5,   1, 4, 8, 8, 5, 1,   3, 2, 6, 6, 7, 2,   4, 3, 7, 7, 8, 4,   1, 5, 6, 6, 2, 1};
+
 	int colorArray[] = { 100, 51, 55 };
 
 	cube_id = 0;
 	glGenBuffers(1, (GLuint*) & (cube_id));
 	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108, cubeArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24, cubeArray, GL_STATIC_DRAW);
+	index_id = 1;
+	glGenBuffers(1, (GLuint*) & (index_id));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube_id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36, cubeIndex, GL_STATIC_DRAW);
 
+	color_id = 2;
 	glGenBuffers(1, (GLuint*) & (color_id));
 	glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
 	glBufferData(GL_COLOR_BUFFER_BIT, sizeof(int) * 3, colorArray, GL_STATIC_DRAW);
@@ -299,11 +308,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	//glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
-	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
+	//glBindBuffer(GL_ARRAY_BUFFER, cube_id);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_id);
 	//glColorPointer(3, GL_INT, 0, NULL);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glColor3b(100, 51, 55);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//glColor3b(100, 51, 55);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	App->ui->Draw();

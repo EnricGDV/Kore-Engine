@@ -28,6 +28,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	uint cube_id;
+	uint index_id;
 	uint color_id;
 	bool debug_draw = false;
 };
