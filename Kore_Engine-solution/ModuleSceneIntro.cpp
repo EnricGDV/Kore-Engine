@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
+#include "Importer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -17,6 +18,9 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 
+	Importer::Debug();
+	meshes = Importer::LoadMeshes("Assets/Models/warrior.fbx");
+
 	game_timer.Start();
 
 
@@ -27,6 +31,8 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+
+	Importer::CleanDebug();
 
 	return true;
 }
@@ -45,4 +51,6 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::Draw()
 {
 	p.Render();
+
+	
 }

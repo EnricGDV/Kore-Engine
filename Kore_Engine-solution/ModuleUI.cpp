@@ -10,7 +10,6 @@
 #include "Libraries/ImGui/imgui.h"
 #include "Libraries/ImGui/imgui_impl_sdl.h"
 #include "Libraries/ImGui/imgui_impl_opengl3.h"
-#include "Libraries/ImGui/imgui_internal.h"
 
 
 
@@ -27,7 +26,6 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Init()
 {
-	IMGUI_CHECKVERSION();
 
 	return true;
 }
@@ -53,7 +51,6 @@ bool ModuleUI::Start()
 
 update_status ModuleUI::PreUpdate(float dt)
 {
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	// Poll and handle events (inputs, window resize, etc.)
 	// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.

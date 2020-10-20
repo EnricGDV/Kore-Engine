@@ -97,6 +97,9 @@
       <Filter>Sources\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Window.h" />
+    <ClInclude Include="Importer.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -163,5 +166,8 @@
       <Filter>Sources\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Importer.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

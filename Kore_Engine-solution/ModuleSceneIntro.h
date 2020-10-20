@@ -6,6 +6,7 @@
 struct PhysBody3D;
 struct PhysMotor3D;
 
+class myMesh;
 
 class ModuleSceneIntro : public Module
 {
@@ -18,8 +19,11 @@ public:
 	void Draw();
 	bool CleanUp();
 
+
 public:
 
 	Timer game_timer;
 	Plane p;
+
+	std::vector<myMesh> meshes;
 };
