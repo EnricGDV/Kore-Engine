@@ -43,6 +43,9 @@ public:
 
 	void RequestBrowser(const char* URL);
 
+	void ConsoleLog(const char* format, ...);
+	vector<string> vector_log;
+
 	vector<float> fps;
 	int max_fps;
 	vector<float> ms;
@@ -53,3 +56,5 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+
+extern Application* App;

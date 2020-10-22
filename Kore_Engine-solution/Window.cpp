@@ -1,12 +1,13 @@
-
 #include "Window.h"
 
 
 Window::Window() 
-{}
+{
+}
 
 Window::~Window() 
-{}
+{
+}
 
 bool Window::Start() 
 { 
@@ -16,16 +17,6 @@ bool Window::Start()
 bool Window::Draw() 
 { 
 	return true; 
-}
-
-update_status Window::PreUpdate(float dt)
-{
-	return UPDATE_CONTINUE;
-}
-
-update_status Window::PostUpdate(float dt)
-{
-	return UPDATE_CONTINUE;
 }
 
 bool Window::CleanUp() 

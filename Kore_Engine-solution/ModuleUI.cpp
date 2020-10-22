@@ -27,11 +27,6 @@ ModuleUI::~ModuleUI()
 bool ModuleUI::Init()
 {
 
-	return true;
-}
-
-bool ModuleUI::Start()
-{
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
@@ -41,12 +36,31 @@ bool ModuleUI::Start()
 	ImGui_ImplOpenGL3_Init("#version 130");
 
 	font = io.Fonts->AddFontDefault();
-    IM_ASSERT(font != NULL);
+	IM_ASSERT(font != NULL);
 
 	textname = "Kore Engine";
 	textorganization = "UPC CITM";
 
+	console = new WindowConsole();
+
+	//add to window list
+	windows.push_back(console);
+
+
 	return true;
+}
+
+bool ModuleUI::Start()
+{
+	bool ret = true;
+
+	for (std::list<Window*>::const_iterator it = windows.begin(); it != windows.end(); it++)
+	{
+		ret = (*it)->Start();
+	}
+
+	return ret;
+
 }
 
 update_status ModuleUI::PreUpdate(float dt)
@@ -254,11 +268,29 @@ update_status ModuleUI::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleUI::Draw()
+bool ModuleUI::Draw()
 {
+
+	bool ret = true;
+
+	SDL_Event ev;
+
+	while (SDL_PollEvent(&ev))
+	{
+		ImGui_ImplSDL2_ProcessEvent(&ev);
+	}
+
+	//Draw Windows List
+	for (std::list<Window*>::const_iterator it = windows.begin(); it != windows.end(); it++)
+	{
+		ret = (*it)->Draw();
+	}
+
 	// Rendering
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	return ret;
 }
 
 // Called before quitting

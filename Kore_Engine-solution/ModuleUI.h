@@ -2,6 +2,7 @@
 #define __ModuleUI_H__
 
 #include "Module.h"
+
 #include "Libraries/SDL/include/SDL.h"
 
 #include <GL/glew.h>
@@ -9,6 +10,9 @@
 #include "Libraries/ImGui/imgui.h"
 #include "Libraries/ImGui/imgui_impl_sdl.h"
 #include "Libraries/ImGui/imgui_impl_opengl3.h"
+
+#include "Window.h"
+#include "WindowConsole.h"
 
 class Application;
 
@@ -26,7 +30,7 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
-	void Draw();
+	bool Draw();
 	bool CleanUp();
 
 
@@ -43,8 +47,10 @@ public:
 	char* textname;
 	char* textorganization;
 
+	//Windows
+	WindowConsole* console = nullptr;
 
-
+	std::list<Window*> windows;
 };
 
 #endif // __ModuleWindow_H__
