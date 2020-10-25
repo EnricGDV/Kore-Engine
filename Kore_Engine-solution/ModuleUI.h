@@ -13,6 +13,11 @@
 
 #include "Window.h"
 #include "WindowConsole.h"
+#include "WindowAbout.h"
+#include "WindowConfig.h"
+#include "WindowHierarchy.h"
+#include "WindowInspector.h"
+#include "WindowMenuBar.h"
 
 class Application;
 
@@ -49,6 +54,11 @@ public:
 
 	//Windows
 	WindowConsole* console = nullptr;
+	WindowAbout* about = nullptr;
+	WindowConfig* config = nullptr;
+	WindowHierarchy* hierarchy = nullptr;
+	WindowInspector* inspector = nullptr;
+	WindowMenuBar* menubar = nullptr;
 
 	std::list<Window*> windows;
 };

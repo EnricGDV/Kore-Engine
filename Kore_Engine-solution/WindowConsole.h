@@ -16,8 +16,8 @@ public:
 	bool CleanUp();
 
 
-		bool AutoScroll;
-	bool ScrollToBottom;
+	bool AutoScroll = true;
+	bool ScrollToBottom = true;
 
 };
 

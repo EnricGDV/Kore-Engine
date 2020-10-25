@@ -102,6 +102,21 @@
     <ClInclude Include="Window.h">
       <Filter>Sources\Modules\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="WindowInspector.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowHierarchy.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowAbout.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowConfig.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMenuBar.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -171,6 +186,21 @@
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowInspector.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHierarchy.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowAbout.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowConfig.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowMenuBar.cpp">
       <Filter>Sources\Modules\Windows</Filter>
     </ClCompile>
   </ItemGroup>

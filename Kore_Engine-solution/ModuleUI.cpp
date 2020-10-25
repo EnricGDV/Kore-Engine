@@ -249,12 +249,7 @@ update_status ModuleUI::Update(float dt)
 	}
 	
 
-	// Show console
-	if (consoleIsActive)
-	{
-		ImGui::Begin("Console");
-		ImGui::End();
-	}
+	
 	
 
 	return UPDATE_CONTINUE;
