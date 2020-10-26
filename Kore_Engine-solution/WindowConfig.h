@@ -5,6 +5,7 @@
 
 class WindowConfig : public Window
 {
+public:
 	WindowConfig();
 	~WindowConfig();
 

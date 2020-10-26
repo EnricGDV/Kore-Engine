@@ -3,7 +3,7 @@
 
 #include "Window.h"
 
-class WindowMenuBar : Window
+class WindowMenuBar : public Window
 {
 public: 
 	WindowMenuBar();
