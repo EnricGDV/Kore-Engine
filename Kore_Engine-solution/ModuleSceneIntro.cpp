@@ -19,7 +19,7 @@ bool ModuleSceneIntro::Start()
 
 
 	Importer::Debug();
-	meshes = Importer::LoadMeshes("Assets/Models/warrior.fbx");
+	meshes = Importer::LoadMeshes("Assets/Models/bakerhouse.fbx");
 
 	game_timer.Start();
 

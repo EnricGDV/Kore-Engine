@@ -3,13 +3,7 @@
 #include "Libraries/Assimp/include/cimport.h"
 #include "Libraries/Assimp/include/scene.h"
 #include "Libraries/Assimp/include/postprocess.h"
-#include "Libraries/Glew/include/GL/glew.h"
-#include "Libraries/SDL/include/SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
 
-#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
-#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Libraries/Assimp/libx86/assimp.lib")
 
 void Importer::Debug()

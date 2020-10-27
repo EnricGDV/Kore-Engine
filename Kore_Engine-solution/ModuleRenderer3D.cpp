@@ -106,6 +106,7 @@ bool ModuleRenderer3D::Init()
 
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
+
 		
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
@@ -152,6 +153,28 @@ bool ModuleRenderer3D::Start()
 
 	GenerateMeshes();
 
+
+	GLubyte checkerImage[32][32][4];
+	for (int i = 0; i < 32; i++) {
+		for (int j = 0; j < 32; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+	checkerImage_id = 0;
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &checkerImage_id );
+	glBindTexture(GL_TEXTURE_2D, checkerImage_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
 	return true;
 }
 
@@ -194,96 +217,125 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 
 	//// CUBE
+	glBindTexture(GL_TEXTURE_2D, checkerImage_id);
+	glBegin(GL_TRIANGLES);
+	//1stface
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-2.f, 0.f, 1.f);
 
-	//glBegin(GL_TRIANGLES);
-	////1stface
-	//
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 1.f);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 0.f, 0.f);
 
-	////2ndface
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 0.f);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(-1.f, 0.f, 0.f);
 
-	////3rdface
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 0.f);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(-1.f, 0.f, 0.f);
 
-	////4thface
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 1.f);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 0.f, 1.f);
 
-	////5thface
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 1.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 1.f);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-2.f, 0.f, 1.f);
 
-	////6thface
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 1.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-1.f, 0.f, 0.f);
-	//glColor3b(100, 51, 55);
-	//glVertex3f(-2.f, 0.f, 0.f);
+	//2ndface
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 1.f, 0.f);
 
-	//glRotatef(0.5f, 1.f, 1.f, 0.f);
-	//glEnd();
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-2.f, 1.f, 1.f);
 
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 1.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 1.f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(-1.f, 1.f, 0.f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 1.f, 0.f);
+
+	//3rdface
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 0.f, 0.f);
+
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-2.f, 0.f, 1.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-2.f, 1.f, 1.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-2.f, 1.f, 1.f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(-2.f, 1.f, 0.f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 0.f, 0.f);
+
+	//4thface
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-1.f, 0.f, 1.f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(-1.f, 0.f, 0.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 0.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 0.f);
+
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 1.f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-1.f, 0.f, 1.f);
+
+	//5thface
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 0.f, 1.f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(-1.f, 0.f, 1.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 1.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 1.f);
+
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-2.f, 1.f, 1.f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 0.f, 1.f);
+
+	//6thface
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 0.f, 0.f);
+
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(-2.f, 1.f, 0.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 0.f);
+
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(-1.f, 1.f, 0.f);
+
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(-1.f, 0.f, 0.f);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(-2.f, 0.f, 0.f);
+
+	glRotatef(0.5f, 1.f, 1.f, 0.f);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, 0);
 	/////
 
 
@@ -313,14 +365,13 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	//glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
+	////glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
 	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_id);
-	//glColorPointer(3, GL_INT, 0, NULL);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glColor3b(100, 51, 55);
-	//glDrawArrays(GL_TRIANGLES, 0, 36);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_id);
+	////glColorPointer(3, GL_INT, 0, NULL);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	App->ui->Draw();
@@ -358,7 +409,7 @@ void ModuleRenderer3D::GenerateMeshes()
 	{
 		glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_vertex));
 		glBindBuffer(GL_ARRAY_BUFFER, App->scene_intro->meshes[i].id_vertex);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * App->scene_intro->meshes[i].num_vertices, App->scene_intro->meshes[i].vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * App->scene_intro->meshes[i].num_vertices * 3, App->scene_intro->meshes[i].vertices, GL_STATIC_DRAW);
 
 		glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_index));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, App->scene_intro->meshes[i].id_index);
@@ -372,8 +423,11 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glColor3b(100, 51, 55);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glTexCoord2f(0.0f, 0.0f);
+	//glTexCoord2f(0.0f, 0.0f);
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

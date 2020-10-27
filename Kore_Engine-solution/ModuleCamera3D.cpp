@@ -22,7 +22,7 @@ bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
 
-	Position = { 0.0f, -100.0f, 20.0f };
+	Position = { 0.0f, -20.0f, 20.0f };
 
 	bool ret = true;
 
