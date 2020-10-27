@@ -22,7 +22,7 @@
     <Filter Include="Sources\Tools\ImGui">
       <UniqueIdentifier>{ab52aee1-3075-4023-81ed-5b18707ab47d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Windows">
+    <Filter Include="Sources\Modules\Windows">
       <UniqueIdentifier>{50fa332d-bfbc-46dd-9dda-a11e3fdaa1b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -94,11 +94,28 @@
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="WindowConsole.h">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Sources\Modules\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h" />
     <ClInclude Include="Importer.h">
       <Filter>Sources\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowInspector.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowHierarchy.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowAbout.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowConfig.h">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMenuBar.h">
+      <Filter>Sources\Modules\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -163,11 +180,28 @@
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="WindowConsole.cpp">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Sources\Modules\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp" />
     <ClCompile Include="Importer.cpp">
       <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowInspector.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHierarchy.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowAbout.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowConfig.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowMenuBar.cpp">
+      <Filter>Sources\Modules\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

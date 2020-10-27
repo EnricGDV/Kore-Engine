@@ -7,6 +7,7 @@
 
 class WindowConsole : public Window
 {
+public:
 	WindowConsole();
 	~WindowConsole();
 
@@ -14,6 +15,9 @@ class WindowConsole : public Window
 	bool Draw();
 	bool CleanUp();
 
+
+	bool AutoScroll = true;
+	bool ScrollToBottom = true;
 
 };
 
