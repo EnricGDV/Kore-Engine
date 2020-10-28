@@ -30,6 +30,9 @@ bool WindowMenuBar::Draw()
 	{
 		ImGui::Checkbox("Console", &App->ui->consoleIsActive);
 		ImGui::Checkbox("Configuration", &App->ui->configIsActive);
+		ImGui::Checkbox("Hierarchy", &App->ui->hierarchyIsActive);
+		ImGui::Checkbox("Inspector", &App->ui->inspectorIsActive);
+		ImGui::Checkbox("About", &App->ui->aboutIsActive);
 		ImGui::Checkbox("Demo Window", &App->ui->demoIsActive);      // Edit bools storing our window open/close state
 
 		ImGui::EndMenu();

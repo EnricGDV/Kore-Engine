@@ -19,6 +19,12 @@ bool WindowInspector::Start()
 
 bool WindowInspector::Draw()
 {
+	if (App->ui->inspectorIsActive)
+	{
+		ImGui::Begin("Inspector", &App->ui->inspectorIsActive);
+
+		ImGui::End();
+	}
 	return true;
 }
 

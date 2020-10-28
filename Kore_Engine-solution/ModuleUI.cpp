@@ -106,6 +106,72 @@ update_status ModuleUI::Update(float dt)
 	//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (demoIsActive)
 		ImGui::ShowDemoWindow(&demoIsActive);
+
+
+	/////Window changes/////
+
+	//Size and Brightness
+
+	int w = NULL;
+	int h = NULL;
+	float b;
+
+	SDL_GetWindowSize(App->window->window, &w, &h);
+	b = SDL_GetWindowBrightness(App->window->window);
+
+	if (b != brightness)
+		SDL_SetWindowBrightness(App->window->window, brightness);
+
+	if(w != windowWidth || h != windowHeight)
+		SDL_SetWindowSize(App->window->window, windowWidth, windowHeight);
+
+	//Fullscreen
+	if (fullscreen && !isFullscreen)
+	{
+		SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN);
+		isFullscreen = true;
+	}
+	else if (!fullscreen && isFullscreen)
+	{
+		SDL_SetWindowFullscreen(App->window->window, !SDL_WINDOW_FULLSCREEN);
+		isFullscreen = false;
+	}
+
+	//Resizable
+	if (resizable && !isResizable)
+	{
+		SDL_SetWindowResizable(App->window->window, SDL_TRUE);
+		isResizable = true;
+	}
+	else if (!resizable && isResizable)
+	{
+		SDL_SetWindowResizable(App->window->window, SDL_FALSE);
+		isResizable = false;
+	}
+
+	//Borderless
+	if (borderless && !isBorderless)
+	{
+		SDL_SetWindowBordered(App->window->window, SDL_FALSE);
+		isBorderless = true;
+	}
+	else if (!borderless && isBorderless)
+	{
+		SDL_SetWindowBordered(App->window->window, SDL_TRUE);
+		isBorderless = false;
+	}
+
+	//Full Desktop
+	if (fulldesktop && !isFulldesktop)
+	{
+		SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		isFulldesktop = true;
+	}
+	else if (!fulldesktop && isFulldesktop)
+	{
+		SDL_SetWindowFullscreen(App->window->window, !SDL_WINDOW_FULLSCREEN_DESKTOP);
+		isFulldesktop = false;
+	}
 		
 	
 	return UPDATE_CONTINUE;

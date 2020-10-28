@@ -7,6 +7,7 @@
 #define MAX_LIGHTS 8
 
 class myMesh;
+class myTexture;
 
 class ModuleRenderer3D : public Module
 {
@@ -23,6 +24,7 @@ public:
 	void OnResize(int width, int height);
 
 	void GenerateMeshes();
+	void GenerateTextures();
 	void Draw(myMesh* mesh);
 
 public:
@@ -33,9 +35,27 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	uint cube_id;
+	uint uvs_id;
+	float* uvs;
 	uint index_id;
 	uint color_id;
 	uint checkerImage_id;
+	
+
+	//Buttons
+	bool isDepthTest = true;
+	bool isCullFace = true;
+	bool isLighting = true;
+	bool isColorMaterial = true;
+	bool isGlTexture2D = true;
+	bool isWireframe = false;
+
+	bool switchDepthTest = true;
+	bool switchCullFace = true;
+	bool switchLighting = true;
+	bool switchColorMaterial = true;
+	bool switchGlTexture2D = true;
+
 
 	float brightness = 1.f;
 	bool debug_draw = false;

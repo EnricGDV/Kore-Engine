@@ -20,7 +20,7 @@ bool WindowAbout::Draw()
 
 	if (App->ui->aboutIsActive)
 	{
-		ImGui::Begin("About Kore Engine");
+		ImGui::Begin("About Kore Engine", &App->ui->aboutIsActive);
 		ImGui::Text("Kore Engine v0.3");
 		ImGui::Spacing();
 		ImGui::Separator();
@@ -40,6 +40,8 @@ bool WindowAbout::Draw()
 		ImGui::BulletText("Glew 2.1.0");
 		ImGui::BulletText("ImGui 1.79");
 		ImGui::BulletText("OpenGL 3.1");
+		ImGui::BulletText("Assimp 4.1.0");
+		ImGui::BulletText("DevIL 1.8.0");
 		ImGui::Spacing();
 		ImGui::Spacing();
 

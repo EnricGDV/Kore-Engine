@@ -12,6 +12,10 @@ WindowConfig::~WindowConfig()
 
 bool WindowConfig::Start()
 {
+	App->ui->brightness = 1.f;
+	App->ui->windowWidth = SCREEN_WIDTH * SCREEN_SIZE;
+	App->ui->windowHeight = SCREEN_HEIGHT * SCREEN_SIZE;
+
 	return true;
 }
 
@@ -22,7 +26,7 @@ bool WindowConfig::Draw()
 	if (App->ui->configIsActive)
 	{
 
-		ImGui::Begin("Configuration");
+		ImGui::Begin("Configuration", &App->ui->configIsActive);
 
 		if (ImGui::BeginMenu("Options"))
 		{
@@ -64,17 +68,25 @@ bool WindowConfig::Draw()
 		if (ImGui::CollapsingHeader("Window"))
 		{
 			ImGui::Checkbox("Active", &App->input->quit);
-			ImGui::SliderFloat("Brightness", &App->renderer3D->brightness, 0.0f, 1.0f);
-			ImGui::SliderInt("Width", &App->window->width, 0.0f, 1920);
-			ImGui::SliderInt("Height", &App->window->height, 0.0f, 1080);
-			ImGui::Checkbox("Fullscreen", &App->window->fullscreen);
+			ImGui::SliderFloat("Brightness", &App->ui->brightness, 0.0f, 1.0f);
+			ImGui::SliderInt("Width", &App->ui->windowWidth, 0.0f, 1920);
+			ImGui::SliderInt("Height", &App->ui->windowHeight, 0.0f, 1080);
+			ImGui::Checkbox("Fullscreen", &App->ui->fullscreen);
 			ImGui::SameLine();
-			ImGui::Checkbox("Resizable", &App->window->resizable);
-			ImGui::Checkbox("Borderless", &App->window->borderless);
+			ImGui::Checkbox("Resizable", &App->ui->resizable);
+			ImGui::Checkbox("Borderless", &App->ui->borderless);
 			ImGui::SameLine();
-			ImGui::Checkbox("Full Desktop", &App->window->fulldesktop);
+			ImGui::Checkbox("Full Desktop", &App->ui->fulldesktop);
 			ImGui::Spacing();
 
+		}
+		if (ImGui::CollapsingHeader("Renderer"))
+		{
+			ImGui::Checkbox("Depth Test", &App->renderer3D->switchDepthTest);
+			ImGui::Checkbox("Cull Face", &App->renderer3D->switchCullFace);
+			ImGui::Checkbox("Lighting", &App->renderer3D->switchLighting);
+			ImGui::Checkbox("Textures 2D", &App->renderer3D->switchGlTexture2D);
+			ImGui::Checkbox("Wireframe", &App->renderer3D->isWireframe);
 		}
 		if (ImGui::CollapsingHeader("File System"))
 		{

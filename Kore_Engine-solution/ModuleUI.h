@@ -43,10 +43,13 @@ public:
 
 	ImFont* font;
 
+	//Enable windows
 	bool demoIsActive = false;
 	bool aboutIsActive = false;
 	bool consoleIsActive = true;
 	bool configIsActive = true;
+	bool hierarchyIsActive = true;
+	bool inspectorIsActive = false;
 
 	//Config
 	char* textname;
@@ -59,6 +62,24 @@ public:
 	WindowHierarchy* hierarchy = nullptr;
 	WindowInspector* inspector = nullptr;
 	WindowMenuBar* menubar = nullptr;
+
+	// Config Window //
+
+	float brightness;
+
+	//Window Size
+	int windowWidth;
+	int windowHeight;
+
+	//Checkboxes
+	bool fullscreen = false;
+	bool isFullscreen = false;
+	bool resizable = false;
+	bool isResizable = false;
+	bool borderless = false;
+	bool isBorderless = false;
+	bool fulldesktop = false;
+	bool isFulldesktop = false;
 
 	std::list<Window*> windows;
 };

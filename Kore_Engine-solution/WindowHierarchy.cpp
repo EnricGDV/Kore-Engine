@@ -1,3 +1,4 @@
+#include "Application.h"
 #include "WindowHierarchy.h"
 
 WindowHierarchy::WindowHierarchy() : Window()
@@ -15,6 +16,12 @@ bool WindowHierarchy::Start()
 
 bool WindowHierarchy::Draw() 
 {
+	if (App->ui->hierarchyIsActive)
+	{
+		ImGui::Begin("Hierarchy", &App->ui->hierarchyIsActive);
+
+		ImGui::End();
+	}
 	return true;
 }
 

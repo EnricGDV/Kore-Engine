@@ -118,6 +118,7 @@ bool ModuleRenderer3D::Init()
 
 	// Projection matrix for
 	OnResize(App->window->width, App->window->height);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return ret;
 }
@@ -132,19 +133,31 @@ bool ModuleRenderer3D::Start()
 	//					  -2.f, 0.f, 0.f, -2.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 1.f, 0.f, -1.f, 0.f, 0.f, -2.f, 0.f, 0.f };
 	
 
-	float cubeArray[] = { -2.f, 0.f, 1.f,  -1.f, 0.f, 1.f,  -1.f, 0.f, 0.f,  -2.f, 0.f, 0.f,  -2.f, 1.f, 1.f,  -1.f, 1.f, 1.f,  -1.f, 1.f, 0.f,  -2.f, 1.f, 0.f };
-	uint cubeIndex[] = {0, 3, 2, 2, 1, 0,   4, 5, 6, 6, 7, 4,   0, 4, 7, 7, 3, 0,   1, 2, 6, 6, 5, 1,   0, 1, 5, 5, 4, 0,   3, 7, 6, 6, 2, 3};
+	float cubeArray[] = { -2.f, 0.f, 1.f,  -1.f, 0.f, 1.f,  -1.f, 0.f, 0.f,  -2.f, 0.f, 0.f,  -2.f, 1.f, 1.f,  -1.f, 1.f, 1.f,  -1.f, 1.f, 0.f,  -2.f, 1.f, 0.f,
+						  -2.f, 0.f, 1.f,  -1.f, 0.f, 1.f,  -1.f, 0.f, 0.f,  -2.f, 0.f, 0.f,  -2.f, 1.f, 1.f,  -1.f, 1.f, 1.f,  -1.f, 1.f, 0.f,  -2.f, 1.f, 0.f, 
+						  -2.f, 0.f, 1.f,  -1.f, 0.f, 1.f,  -1.f, 0.f, 0.f,  -2.f, 0.f, 0.f,  -2.f, 1.f, 1.f,  -1.f, 1.f, 1.f,  -1.f, 1.f, 0.f,  -2.f, 1.f, 0.f };
+
+	uint cubeIndex[] = {0, 3, 2, 2, 1, 0,   4, 5, 6, 6, 7, 4,   8, 12, 15, 15, 11, 8,   9, 10, 14, 14, 13, 9,   16, 17, 21, 21, 20, 16,   19, 23, 22, 22, 18, 19};
+
+	float cubeUVs [] = { 0.f, 1.f,  1.f, 1.f,  1.f, 0.f,  0.f, 0.f,  0.f, 0.f,  1.f, 0.f,  1.f, 1.f,  0.f, 1.f,
+						 1.f, 0.f,  0.f, 0.f,  1.f, 0.f,  0.f, 0.f,  1.f, 1.f,  0.f, 1.f,  1.f, 1.f,  0.f, 1.f,
+						 0.f, 0.f,  1.f, 0.f,  1.f, 0.f,  0.f, 0.f,  0.f, 1.f,  1.f, 1.f,  1.f, 1.f,  0.f, 1.f };
+	uvs = cubeUVs;
 
 	int colorArray[] = { 100, 51, 55 };
 
 	cube_id = 0;
 	glGenBuffers(1, (GLuint*) & (cube_id));
 	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24, cubeArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 72, cubeArray, GL_STATIC_DRAW);
 	index_id = 1;
 	glGenBuffers(1, (GLuint*) & (index_id));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 36, cubeIndex, GL_STATIC_DRAW);
+	uvs_id = 3;
+	glGenBuffers(1, (GLuint*) & (uvs_id));
+	glBindBuffer(GL_ARRAY_BUFFER, uvs_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 48, cubeUVs, GL_STATIC_DRAW);
 
 	color_id = 2;
 	glGenBuffers(1, (GLuint*) & (color_id));
@@ -152,28 +165,8 @@ bool ModuleRenderer3D::Start()
 	glBufferData(GL_COLOR_BUFFER_BIT, sizeof(int) * 3, colorArray, GL_STATIC_DRAW);
 
 	GenerateMeshes();
+	GenerateTextures();
 
-
-	GLubyte checkerImage[32][32][4];
-	for (int i = 0; i < 32; i++) {
-		for (int j = 0; j < 32; j++) {
-			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-			checkerImage[i][j][0] = (GLubyte)c;
-			checkerImage[i][j][1] = (GLubyte)c;
-			checkerImage[i][j][2] = (GLubyte)c;
-			checkerImage[i][j][3] = (GLubyte)255;
-		}
-	}
-
-	checkerImage_id = 0;
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &checkerImage_id );
-	glBindTexture(GL_TEXTURE_2D, checkerImage_id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 
 	return true;
 }
@@ -181,6 +174,54 @@ bool ModuleRenderer3D::Start()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	//Buttons
+
+	if (switchDepthTest && !isDepthTest)
+	{
+		glEnable(GL_DEPTH_TEST);
+		isDepthTest = true;
+	}
+	else if (!switchDepthTest && isDepthTest)
+	{
+		glDisable(GL_DEPTH_TEST);
+		isDepthTest = false;
+	}
+
+	if (switchCullFace && !isCullFace)
+	{
+		glEnable(GL_CULL_FACE);
+		isCullFace = true;
+	}
+	else if (!switchCullFace && isCullFace)
+	{
+		glDisable(GL_CULL_FACE);
+		isCullFace = false;
+	}
+
+	if (switchLighting && !isLighting)
+	{
+		glEnable(GL_LIGHTING);
+		isLighting = true;
+	}
+	else if (!switchLighting && isLighting)
+	{
+		glDisable(GL_LIGHTING);
+		isLighting = false;
+	}
+
+	if (switchGlTexture2D && !isGlTexture2D)
+	{
+		glEnable(GL_TEXTURE_2D);
+		isGlTexture2D = true;
+	}
+	else if (!switchGlTexture2D && isGlTexture2D)
+	{
+		glDisable(GL_TEXTURE_2D);
+		isGlTexture2D = false;
+	}
+
+
+
 	Color c = Black;
 	glClearColor(c.r, c.g, c.b, c.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -188,6 +229,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
+
 
 	/*glBegin(GL_POLYGON);
 	glColor3b(100, 51, 55);
@@ -217,125 +259,125 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 
 	//// CUBE
-	glBindTexture(GL_TEXTURE_2D, checkerImage_id);
-	glBegin(GL_TRIANGLES);
-	//1stface
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-2.f, 0.f, 1.f);
+	//glBindTexture(GL_TEXTURE_2D, checkerImage_id);
+	//glBegin(GL_TRIANGLES);
+	////1stface
+	//glTexCoord2f(0.0f, 1.0f);
+	//glVertex3f(-2.f, 0.f, 1.f);
 
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 0.f, 0.f);
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 0.f, 0.f);
 
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(-1.f, 0.f, 0.f);
+	//glTexCoord2f(1.0f, 0.0f);
+	//glVertex3f(-1.f, 0.f, 0.f);
 
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(-1.f, 0.f, 0.f);
+	//glTexCoord2f(1.0f, 0.0f);
+	//glVertex3f(-1.f, 0.f, 0.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 0.f, 1.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 0.f, 1.f);
 
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-2.f, 0.f, 1.f);
+	//glTexCoord2f(0.0f, 1.0f);
+	//glVertex3f(-2.f, 0.f, 1.f);
 
-	//2ndface
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 1.f, 0.f);
+	////2ndface
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 1.f, 0.f);
 
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-2.f, 1.f, 1.f);
+	//glTexCoord2f(0.0f, 1.0f);
+	//glVertex3f(-2.f, 1.f, 1.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 1.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 1.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 1.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 1.f);
 
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(-1.f, 1.f, 0.f);
+	//glTexCoord2f(1.0f, 0.0f);
+	//glVertex3f(-1.f, 1.f, 0.f);
 
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 1.f, 0.f);
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 1.f, 0.f);
 
-	//3rdface
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 0.f, 0.f);
+	////3rdface
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 0.f, 0.f);
 
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-2.f, 0.f, 1.f);
+	//glTexCoord2f(0.0f, 1.0f);
+	//glVertex3f(-2.f, 0.f, 1.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-2.f, 1.f, 1.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-2.f, 1.f, 1.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-2.f, 1.f, 1.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-2.f, 1.f, 1.f);
 
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(-2.f, 1.f, 0.f);
+	//glTexCoord2f(1.0f, 0.0f);
+	//glVertex3f(-2.f, 1.f, 0.f);
 
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 0.f, 0.f);
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 0.f, 0.f);
 
-	//4thface
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-1.f, 0.f, 1.f);
+	////4thface
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-1.f, 0.f, 1.f);
 
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(-1.f, 0.f, 0.f);
+	//glTexCoord2f(1.0f, 0.0f);
+	//glVertex3f(-1.f, 0.f, 0.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 0.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 0.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 0.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 0.f);
 
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 1.f);
+	//glTexCoord2f(0.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 1.f);
 
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-1.f, 0.f, 1.f);
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-1.f, 0.f, 1.f);
 
-	//5thface
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 0.f, 1.f);
+	////5thface
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 0.f, 1.f);
 
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(-1.f, 0.f, 1.f);
+	//glTexCoord2f(1.0f, 0.0f);
+	//glVertex3f(-1.f, 0.f, 1.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 1.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 1.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 1.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 1.f);
 
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-2.f, 1.f, 1.f);
+	//glTexCoord2f(0.0f, 1.0f);
+	//glVertex3f(-2.f, 1.f, 1.f);
 
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 0.f, 1.f);
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 0.f, 1.f);
 
-	//6thface
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 0.f, 0.f);
+	////6thface
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 0.f, 0.f);
 
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(-2.f, 1.f, 0.f);
+	//glTexCoord2f(0.0f, 1.0f);
+	//glVertex3f(-2.f, 1.f, 0.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 0.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 0.f);
 
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(-1.f, 1.f, 0.f);
+	//glTexCoord2f(1.0f, 1.0f);
+	//glVertex3f(-1.f, 1.f, 0.f);
 
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(-1.f, 0.f, 0.f);
+	//glTexCoord2f(1.0f, 0.0f);
+	//glVertex3f(-1.f, 0.f, 0.f);
 
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(-2.f, 0.f, 0.f);
+	//glTexCoord2f(0.0f, 0.0f);
+	//glVertex3f(-2.f, 0.f, 0.f);
 
-	glRotatef(0.5f, 1.f, 1.f, 0.f);
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glRotatef(0.5f, 1.f, 1.f, 0.f);
+	//glEnd();
+	//glBindTexture(GL_TEXTURE_2D, 0);
 	/////
 
 
@@ -364,15 +406,21 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		Draw(&App->scene_intro->meshes[i]);
 	}
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	////glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
-	glBindBuffer(GL_ARRAY_BUFFER, cube_id);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_id);
-	////glColorPointer(3, GL_INT, 0, NULL);
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//////glBindBuffer(GL_COLOR_BUFFER_BIT, color_id);
+	//////glColorPointer(3, GL_INT, 0, NULL);
+	//glBindBuffer(GL_ARRAY_BUFFER, cube_id);
 	//glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_id);
+	//glBindBuffer(GL_ARRAY_BUFFER, uvs_id);
+	//glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	////glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glBindTexture(GL_TEXTURE_2D, checkerImage_id);
 	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 
 	App->ui->Draw();
 	SDL_GL_SwapWindow(App->window->window);
@@ -414,20 +462,80 @@ void ModuleRenderer3D::GenerateMeshes()
 		glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_index));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, App->scene_intro->meshes[i].id_index);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * App->scene_intro->meshes[i].num_indices, App->scene_intro->meshes[i].indices, GL_STATIC_DRAW);
+
+
+			glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_texcoord));
+			glBindBuffer(GL_ARRAY_BUFFER, App->scene_intro->meshes[i].id_texcoord);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * App->scene_intro->meshes[i].num_vertices * 2, App->scene_intro->meshes[i].textureCoords, GL_STATIC_DRAW);
+
+		glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_normal));
+		glBindBuffer(GL_ARRAY_BUFFER, App->scene_intro->meshes[i].id_normal);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * App->scene_intro->meshes[i].num_vertices * 3, App->scene_intro->meshes[i].normals, GL_STATIC_DRAW);
 	}
 
+}
+
+void ModuleRenderer3D::GenerateTextures()
+{
+	GLubyte checkerImage[32][32][4];
+	for (int i = 0; i < 32; i++) {
+		for (int j = 0; j < 32; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+	checkerImage_id = 0;
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &checkerImage_id);
+	glBindTexture(GL_TEXTURE_2D, checkerImage_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
+	/*for (int i = 0; i < App->scene_intro->textures.size(); ++i)
+	{
+		glGenTextures(1, &App->scene_intro->textures[i].id);
+		glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[i].id);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, App->scene_intro->textures[i].data);
+	}*/
+	
 }
 
 void ModuleRenderer3D::Draw(myMesh* mesh)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glColor3b(100, 51, 55);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//glTexCoord2f(0.0f, 0.0f);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->id_index);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texcoord);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	if(isWireframe)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+	glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[0].id);
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if(isWireframe)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

@@ -7,6 +7,7 @@ struct PhysBody3D;
 struct PhysMotor3D;
 
 class myMesh;
+class myTexture;
 
 class ModuleSceneIntro : public Module
 {
@@ -26,4 +27,5 @@ public:
 	Plane p;
 
 	std::vector<myMesh> meshes;
+	std::vector<myTexture> textures;
 };

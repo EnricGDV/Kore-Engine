@@ -22,7 +22,7 @@ bool WindowConsole::Draw()
 	if (App->ui->consoleIsActive)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 2));
-		ImGui::Begin("Console");
+		ImGui::Begin("Console", &App->ui->consoleIsActive);
 
 		for (int i = 0; i < App->vector_log.size(); ++i)
 		{

@@ -3,8 +3,14 @@
 #include "Libraries/Assimp/include/cimport.h"
 #include "Libraries/Assimp/include/scene.h"
 #include "Libraries/Assimp/include/postprocess.h"
+#include "Libraries/DevIL/include/IL/il.h"
+#include "Libraries/DevIL/include/IL/ilu.h"
+#include "Libraries/DevIL/include/IL/ilut.h"
 
 #pragma comment (lib, "Libraries/Assimp/libx86/assimp.lib")
+#pragma comment (lib, "Libraries/DevIL/libx86/DevIL.lib")
+#pragma comment (lib, "Libraries/DevIL/libx86/ILU.lib")
+#pragma comment (lib, "Libraries/DevIL/libx86/ILUT.lib")
 
 void Importer::Debug()
 {
@@ -12,6 +18,15 @@ void Importer::Debug()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
+	if (ilGetInteger(IL_VERSION_NUM) < IL_VERSION || iluGetInteger(ILU_VERSION_NUM) < ILU_VERSION || ilutGetInteger(ILUT_VERSION_NUM) < ILUT_VERSION) 
+	{
+		LOG("DevIL version is different!");
+	}
+	else
+	{
+		ilInit();
+		ilutRenderer(ILUT_OPENGL);
+	}
 }
 
 void Importer::CleanDebug()
@@ -33,6 +48,24 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 			m.vertices = new float[m.num_vertices * 3];
 			memcpy(m.vertices, scene->mMeshes[i]->mVertices, sizeof(float) * m.num_vertices * 3);
 			LOG("New mesh with %d vertices", m.num_vertices);
+
+			if (scene->mMeshes[i]->HasNormals())
+			{
+				m.normals = new float [m.num_vertices * 3];
+				memcpy(m.normals, scene->mMeshes[i]->mNormals, sizeof(float) * m.num_vertices * 3);
+				LOG("Normals loaded");
+			}
+
+			if (scene->mMeshes[i]->HasTextureCoords(0))
+			{
+				m.textureCoords = new float[m.num_vertices * 2];
+				for (int j = 0; j < m.num_vertices; j++)
+				{
+					m.textureCoords[j * 2] = scene->mMeshes[i]->mTextureCoords[0][j].x;
+					m.textureCoords[j * 2 + 1] = scene->mMeshes[i]->mTextureCoords[0][j].y;
+				}
+				LOG("UVs loaded");
+			}
 
 			// copy faces
 			if (scene->mMeshes[i]->HasFaces())
@@ -64,13 +97,43 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 		
 }
 
+myTexture Importer::LoadTexture(char* file_path)
+{
+	myTexture tex;
 
+	if (ilLoadImage(file_path))
+	{
+		LOG("Texture path loaded properly");
+		tex.path = file_path;
+	}
+	else
+	{
+		LOG("Texture path didn't load properly");
+		return tex;
+	}
+
+	tex.id = ilutGLBindTexImage();
+	tex.data = ilGetData();
+	tex.width = ilGetInteger(IL_IMAGE_WIDTH);
+	tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+	return tex;
+}
 
 myMesh::myMesh()
 {
 
 }
 myMesh::~myMesh()
+{
+
+}
+
+myTexture::myTexture()
+{
+
+}
+myTexture::~myTexture()
 {
 
 }
