@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "Importer.h"
 
 #define MAX_KEYS 300
 
@@ -110,6 +111,36 @@ update_status ModuleInput::PreUpdate(float dt)
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
 					App->renderer3D->OnResize(e.window.data1, e.window.data2);
 			}
+		
+			case SDL_DROPFILE:
+			{
+				if (e.type == SDL_DROPFILE)
+				{
+					drop_path = e.drop.file;
+					if (GetExtension(drop_path) == ".fbx" || GetExtension(drop_path) == ".FBX")
+					{
+						App->scene_intro->meshes = Importer::LoadMeshes(drop_path);
+						App->renderer3D->GenerateMeshes();
+
+						LOG("3D Model from %s was dropped into the scene", drop_path);
+					}
+					else if(GetExtension(drop_path) == ".png" || GetExtension(drop_path) == ".dds")
+					{
+						App->scene_intro->textures.push_back(Importer::LoadTexture(drop_path));
+						App->renderer3D->GenerateTextures();
+						App->renderer3D->num_tex++;
+
+						LOG("Texture Image from %s was dropped into the scene", drop_path);
+					}
+					else
+					{
+						LOG("Error: kore engine doesn't support the dropped file extension!");
+					}
+				}
+
+
+				break;
+			}
 		}
 	}
 
@@ -125,4 +156,14 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+std::string ModuleInput::GetExtension(std::string path)
+{
+	if (path.find_last_of('.') != -1)
+	{
+		path.erase(0, path.find_last_of('.'));
+		
+		return path;
+	}
 }

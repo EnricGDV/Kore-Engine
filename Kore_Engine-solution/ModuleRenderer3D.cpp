@@ -528,7 +528,7 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
 	glNormalPointer(GL_FLOAT, 0, NULL);
-	glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[0].id);
+	glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[num_tex].id);
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
 	glBindTexture(GL_TEXTURE_2D, 0);
 

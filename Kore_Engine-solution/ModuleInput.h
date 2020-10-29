@@ -58,6 +58,8 @@ public:
 		return mouse_y_motion;
 	}
 
+	std::string GetExtension(std::string path);
+
 	bool quit = false;
 
 
@@ -70,5 +72,7 @@ private:
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;
+
+	char* drop_path;
 
 };

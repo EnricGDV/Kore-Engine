@@ -83,10 +83,13 @@ bool WindowConfig::Draw()
 		if (ImGui::CollapsingHeader("Renderer"))
 		{
 			ImGui::Checkbox("Depth Test", &App->renderer3D->switchDepthTest);
+			ImGui::SameLine();
 			ImGui::Checkbox("Cull Face", &App->renderer3D->switchCullFace);
 			ImGui::Checkbox("Lighting", &App->renderer3D->switchLighting);
+			ImGui::SameLine();
 			ImGui::Checkbox("Textures 2D", &App->renderer3D->switchGlTexture2D);
 			ImGui::Checkbox("Wireframe", &App->renderer3D->isWireframe);
+			ImGui::Spacing();
 		}
 		if (ImGui::CollapsingHeader("File System"))
 		{

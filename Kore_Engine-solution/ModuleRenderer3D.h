@@ -25,6 +25,8 @@ public:
 
 	void GenerateMeshes();
 	void GenerateTextures();
+	int num_tex = 0;
+
 	void Draw(myMesh* mesh);
 
 public:
