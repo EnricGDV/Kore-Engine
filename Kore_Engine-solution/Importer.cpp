@@ -67,6 +67,15 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 				LOG("UVs loaded");
 			}
 
+			if (scene->HasMaterials())
+			{
+				//m.materialIndices[i] = scene->mMeshes[i]->mMaterialIndex;
+				//scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]->GetTexture(type, m.materialid, path);
+				//m.materialpath = (char*)path->C_Str();
+
+				//m.material = &LoadTexture(m.materialpath);
+			}
+
 			// copy faces
 			if (scene->mMeshes[i]->HasFaces())
 			{

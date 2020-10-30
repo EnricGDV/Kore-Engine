@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "WindowMenuBar.h"
+#include "Importer.h"
 
 WindowMenuBar::WindowMenuBar() : Window ()
 {
@@ -47,6 +48,31 @@ bool WindowMenuBar::Draw()
 			App->RequestBrowser("https://github.com/EnricGDV/Kore-Engine/issues");
 		if (ImGui::MenuItem("About"))
 			App->ui->aboutIsActive = true;
+
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("Primitives"))
+	{
+		if (ImGui::MenuItem("Cube"))
+		{
+			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Cube.FBX");
+			App->renderer3D->GenerateMeshes();
+		}
+		if (ImGui::MenuItem("Sphere"))
+		{
+			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Sphere.FBX");
+			App->renderer3D->GenerateMeshes();
+		}
+		if (ImGui::MenuItem("Pyramid"))
+		{
+			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Pyramid.FBX");
+			App->renderer3D->GenerateMeshes();
+		}
+		if (ImGui::MenuItem("Cylinder"))
+		{
+			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Cylinder.FBX");
+			App->renderer3D->GenerateMeshes();
+		}
 
 		ImGui::EndMenu();
 	}

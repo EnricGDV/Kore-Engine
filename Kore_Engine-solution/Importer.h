@@ -1,6 +1,19 @@
 #include "Globals.h"
 #include <iostream>
 
+class myTexture
+{
+public:
+	myTexture();
+	~myTexture();
+
+	uint id;
+	const void* data;
+	uint width;
+	uint height;
+
+	char* path;
+};
 
 class myMesh
 {
@@ -20,22 +33,14 @@ public:
 	float* vertices = nullptr;
 	float* textureCoords = nullptr;
 	float* normals = nullptr;
+
 	uint* materialIndices = nullptr;
+	uint materialid;
+	char* materialpath;
+	//myTexture* material;
 };
 
-class myTexture
-{
-public:
-	myTexture();
-	~myTexture();
 
-	uint id;
-	const void* data;
-	uint width;
-	uint height;
-
-	char* path;
-};
 
 namespace Importer
 {
