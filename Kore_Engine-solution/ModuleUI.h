@@ -64,7 +64,6 @@ public:
 	WindowMenuBar* menubar = nullptr;
 
 	// Config Window //
-
 	float brightness;
 
 	//Window Size
