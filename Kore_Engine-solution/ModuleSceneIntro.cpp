@@ -20,7 +20,7 @@ bool ModuleSceneIntro::Start()
 	Importer::Debug();
 	meshes = Importer::LoadMeshes("Assets/Models/bakerhouse.fbx");
 
-	textures.push_back(Importer::LoadTexture("Assets/Textures/bakerhouse.png"));
+	textures.push_back(Importer::LoadTexture("Assets/Textures/Baker_house.png"));
 
 	game_timer.Start();
 

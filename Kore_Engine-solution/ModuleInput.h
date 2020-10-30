@@ -62,6 +62,10 @@ public:
 
 	bool quit = false;
 
+	bool active = true;
+
+
+	const char* drop_path;
 
 private:
 	KEY_STATE* keyboard;
@@ -73,6 +77,5 @@ private:
 	int mouse_y_motion;
 	//int mouse_z_motion;
 
-	char* drop_path;
 
 };

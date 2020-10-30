@@ -36,7 +36,7 @@ void Importer::CleanDebug()
 	aiDetachAllLogStreams();
 }
 
-std::vector<myMesh> Importer::LoadMeshes(char* file_path)
+std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 {
 	vector<myMesh> meshvector;
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
@@ -71,13 +71,16 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 				App->ConsoleLog("UVs loaded");
 			}
 
-			if (scene->HasMaterials())
+			if (scene->HasMaterials() && scene->mMeshes[i]->mMaterialIndex != NULL)
 			{
-				//m.materialIndices[i] = scene->mMeshes[i]->mMaterialIndex;
-				//scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]->GetTexture(type, m.materialid, path);
-				//m.materialpath = (char*)path->C_Str();
+				aiString materialpath;
+				scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, m.materialid, &materialpath);
 
-				//m.material = &LoadTexture(m.materialpath);
+				m.materialpath = materialpath.C_Str();
+				App->scene_intro->textures.push_back(LoadTexture(m.materialpath));
+				App->renderer3D->GenerateTextures();
+				App->renderer3D->num_tex++;
+				
 			}
 
 			// copy faces
@@ -112,7 +115,7 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 		
 }
 
-myTexture Importer::LoadTexture(char* file_path)
+myTexture Importer::LoadTexture(const char* file_path)
 {
 	myTexture tex;
 

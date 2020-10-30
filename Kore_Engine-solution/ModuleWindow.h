@@ -33,6 +33,8 @@ public:
 	bool resizable = WIN_RESIZABLE;
 	bool fulldesktop = WIN_FULLSCREEN_DESKTOP;
 	bool borderless = WIN_BORDERLESS;
+
+	bool active = true;
 };
 
 #endif // __ModuleWindow_H__

@@ -12,7 +12,7 @@ public:
 	uint width;
 	uint height;
 
-	char* path;
+	const char* path;
 };
 
 class myMesh
@@ -36,7 +36,7 @@ public:
 
 	uint* materialIndices = nullptr;
 	uint materialid;
-	char* materialpath;
+	const char* materialpath;
 	//myTexture* material;
 };
 
@@ -47,6 +47,6 @@ namespace Importer
 	void Debug();
 	void CleanDebug();
 
-	std::vector<myMesh> LoadMeshes(char* file_path);
-	myTexture LoadTexture(char* file_path);
+	std::vector<myMesh> LoadMeshes(const char* file_path);
+	myTexture LoadTexture(const char* file_path);
 }

@@ -67,16 +67,12 @@ bool WindowConfig::Draw()
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
-			ImGui::Checkbox("Active", &App->input->quit);
+			ImGui::Checkbox("Active", &App->window->active);
 			ImGui::SliderFloat("Brightness", &App->ui->brightness, 0.0f, 1.0f);
 			ImGui::SliderInt("Width", &App->ui->windowWidth, 0.0f, 1920);
 			ImGui::SliderInt("Height", &App->ui->windowHeight, 0.0f, 1080);
-			ImGui::Checkbox("Fullscreen", &App->ui->fullscreen);
-			ImGui::SameLine();
-			ImGui::Checkbox("Resizable", &App->ui->resizable);
-			ImGui::Checkbox("Borderless", &App->ui->borderless);
-			ImGui::SameLine();
-			ImGui::Checkbox("Full Desktop", &App->ui->fulldesktop);
+			ImGui::Checkbox("Fullscreen", &App->ui->fullscreen); ImGui::SameLine(); ImGui::Checkbox("Resizable", &App->ui->resizable);
+			ImGui::Checkbox("Borderless", &App->ui->borderless); ImGui::SameLine(); ImGui::Checkbox("Full Desktop", &App->ui->fulldesktop);
 			ImGui::Spacing();
 
 		}
@@ -85,9 +81,7 @@ bool WindowConfig::Draw()
 			ImGui::Checkbox("Depth Test", &App->renderer3D->switchDepthTest);
 			ImGui::SameLine();
 			ImGui::Checkbox("Cull Face", &App->renderer3D->switchCullFace);
-			ImGui::Checkbox("Lighting", &App->renderer3D->switchLighting);
-			ImGui::SameLine();
-			ImGui::Checkbox("Textures 2D", &App->renderer3D->switchGlTexture2D);
+			ImGui::Checkbox("Lighting", &App->renderer3D->switchLighting); ImGui::SameLine(); ImGui::Checkbox("Textures 2D", &App->renderer3D->switchGlTexture2D);
 			ImGui::Checkbox("Wireframe", &App->renderer3D->isWireframe);
 			ImGui::Spacing();
 		}
@@ -97,11 +91,30 @@ bool WindowConfig::Draw()
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
-
+			ImGui::Checkbox("Active", &App->input->active);
+			ImGui::Text("Mouse Position: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%d, %d", App->input->GetMouseX(), App->input->GetMouseY());
+			ImGui::Text("Mouse Motion: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%d, %d", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
+			ImGui::Text("Mouse Wheel: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%d", App->input->GetMouseZ());
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
-			
+			SDL_version compiled;
+			SDL_GetVersion(&compiled);
+
+			ImGui::Checkbox("Active", &App->input->active);
+			ImGui::Text("SDL Version: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%d.%d.%d", compiled.major, compiled.minor, compiled.patch);
+			ImGui::Separator();
+
+			ImGui::Text("CPUs: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%d   (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+			ImGui::Text("System RAM: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%.1lfGb", round(SDL_GetSystemRAM() / 1024.f));
+			ImGui::Separator();
+
+			GLint vram_budget = 0;
+			glGetIntegerv(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX, &vram_budget);
+
+			ImGui::Text("GPU: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%s %s", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+			//ImGui::Text("Brand: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%s %s", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+			//ImGui::Text("VRAM Budget: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%.1lfMb", round(vram_budget / 1024.f));
 		}
 
 
