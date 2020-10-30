@@ -93,9 +93,6 @@
     <ClInclude Include="Libraries\ImGui\imstb_truetype.h">
       <Filter>Sources\Tools\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Sources\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="WindowConsole.h">
       <Filter>Sources\Modules\Windows</Filter>
     </ClInclude>
@@ -193,9 +190,6 @@
     </ClCompile>
     <ClCompile Include="Libraries\ImGui\imgui_widgets.cpp">
       <Filter>Sources\Tools\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Primitive.cpp">
-      <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="WindowConsole.cpp">
       <Filter>Sources\Modules\Windows</Filter>

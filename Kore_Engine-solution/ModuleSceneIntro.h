@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "Primitive.h"
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -24,7 +23,6 @@ public:
 public:
 
 	Timer game_timer;
-	Plane p;
 
 	std::vector<myMesh> meshes;
 	std::vector<myTexture> textures;
