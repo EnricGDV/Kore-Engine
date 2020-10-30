@@ -25,6 +25,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 bool ModuleRenderer3D::Init()
 {
 	LOG("Creating 3D Renderer context");
+	App->ConsoleLog("Creating 3D Renderer context");
 	bool ret = true;
 	
 	//Create context
@@ -32,6 +33,7 @@ bool ModuleRenderer3D::Init()
 	if(context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		App->ConsoleLog("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	
@@ -43,15 +45,23 @@ bool ModuleRenderer3D::Init()
 		LOG("Renderer: %s", glGetString(GL_RENDERER));
 		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		App->ConsoleLog("Vendor: %s", glGetString(GL_VENDOR));
+		App->ConsoleLog("Renderer: %s", glGetString(GL_RENDERER));
+		App->ConsoleLog("OpenGL version supported %s", glGetString(GL_VERSION));
+		App->ConsoleLog("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
+		if (VSYNC && SDL_GL_SetSwapInterval(1) < 0)
+		{
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			App->ConsoleLog("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		}
+			
 
 		//Initialize Glew
 		GLenum err = glewInit();
 		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-
+		App->ConsoleLog("Using Glew %s", glewGetString(GLEW_VERSION));
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -61,6 +71,7 @@ bool ModuleRenderer3D::Init()
 		if(error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			App->ConsoleLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -73,6 +84,7 @@ bool ModuleRenderer3D::Init()
 		if(error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			App->ConsoleLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -89,6 +101,7 @@ bool ModuleRenderer3D::Init()
 		if(error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			App->ConsoleLog("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -431,7 +444,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
-
+	App->ConsoleLog("Destroying 3D Renderer");
 	SDL_GL_DeleteContext(context);
 
 	return true;

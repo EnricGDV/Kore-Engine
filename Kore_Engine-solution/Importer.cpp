@@ -1,4 +1,5 @@
 #include "Importer.h"
+#include "Application.h"
 
 #include "Libraries/Assimp/include/cimport.h"
 #include "Libraries/Assimp/include/scene.h"
@@ -21,6 +22,7 @@ void Importer::Debug()
 	if (ilGetInteger(IL_VERSION_NUM) < IL_VERSION || iluGetInteger(ILU_VERSION_NUM) < ILU_VERSION || ilutGetInteger(ILUT_VERSION_NUM) < ILUT_VERSION) 
 	{
 		LOG("DevIL version is different!");
+		App->ConsoleLog("DevIL version is different!");
 	}
 	else
 	{
@@ -48,12 +50,13 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 			m.vertices = new float[m.num_vertices * 3];
 			memcpy(m.vertices, scene->mMeshes[i]->mVertices, sizeof(float) * m.num_vertices * 3);
 			LOG("New mesh with %d vertices", m.num_vertices);
-
+			App->ConsoleLog("New mesh with %d vertices", m.num_vertices);
 			if (scene->mMeshes[i]->HasNormals())
 			{
 				m.normals = new float [m.num_vertices * 3];
 				memcpy(m.normals, scene->mMeshes[i]->mNormals, sizeof(float) * m.num_vertices * 3);
 				LOG("Normals loaded");
+				App->ConsoleLog("Normals loaded");
 			}
 
 			if (scene->mMeshes[i]->HasTextureCoords(0))
@@ -65,6 +68,7 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 					m.textureCoords[j * 2 + 1] = scene->mMeshes[i]->mTextureCoords[0][j].y;
 				}
 				LOG("UVs loaded");
+				App->ConsoleLog("UVs loaded");
 			}
 
 			if (scene->HasMaterials())
@@ -86,6 +90,7 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 					if (scene->mMeshes[i]->mFaces[j].mNumIndices != 3)
 					{
 						LOG("WARNING, geometry face with != 3 indices!");
+						App->ConsoleLog("WARNING, geometry face with != 3 indices!");
 					}
 					else
 					{
@@ -101,6 +106,7 @@ std::vector<myMesh> Importer::LoadMeshes(char* file_path)
 	else
 	{
 		LOG("Error loading scene % s", file_path);
+		App->ConsoleLog("Error loading scene % s", file_path);
 		return meshvector;
 	}
 		
@@ -113,11 +119,13 @@ myTexture Importer::LoadTexture(char* file_path)
 	if (ilLoadImage(file_path))
 	{
 		LOG("Texture path loaded properly");
+		App->ConsoleLog("Texture path loaded properly");
 		tex.path = file_path;
 	}
 	else
 	{
 		LOG("Texture path didn't load properly");
+		App->ConsoleLog("Texture path didn't load properly");
 		return tex;
 	}
 
