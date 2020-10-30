@@ -107,6 +107,13 @@ bool WindowConfig::Draw()
 
 			ImGui::Text("CPUs: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%d   (Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
 			ImGui::Text("System RAM: "); ImGui::SameLine(); ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "%.1lfGb", round(SDL_GetSystemRAM() / 1024.f));
+
+			ImGui::Text("Caps: "); ImGui::SameLine();
+			if(SDL_Has3DNow()) ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "3DNow,"); ImGui::SameLine(); if (SDL_HasAVX())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "AVX,"); ImGui::SameLine();
+			if (SDL_HasAltiVec())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "AltiVec,"); ImGui::SameLine(); if (SDL_HasMMX())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "MMX,"); ImGui::SameLine();
+			if (SDL_HasRDTSC())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "RDTSC,"); if (SDL_HasSSE()) ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "SSE,"); ImGui::SameLine();
+			if (SDL_HasSSE2())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "SSE2,"); ImGui::SameLine(); if (SDL_HasSSE3())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "SSE3,"); ImGui::SameLine();
+			if (SDL_HasSSE41())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "SSE41,"); ImGui::SameLine(); if (SDL_HasSSE42())ImGui::TextColored({ 1.f, 0.f, 0.7f, 1.f }, "SSE42,");
 			ImGui::Separator();
 
 			GLint vram_budget = 0;

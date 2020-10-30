@@ -1,5 +1,9 @@
 #include "Application.h"
 #include "WindowAbout.h"
+#include "Libraries/DevIL/include/IL/il.h"
+#include "Libraries/DevIL/include/IL/ilu.h"
+#include "Libraries/DevIL/include/IL/ilut.h"
+#include "Libraries/Assimp/include/version.h"
 
 
 WindowAbout::WindowAbout() : Window()
@@ -36,12 +40,16 @@ bool WindowAbout::Draw()
 		ImGui::Spacing();
 
 		ImGui::Text("3rd Party Libraries used:");
-		ImGui::BulletText("SDL 2.0.12");
-		ImGui::BulletText("Glew 2.1.0");
-		ImGui::BulletText("ImGui 1.79");
-		ImGui::BulletText("OpenGL 3.1");
-		ImGui::BulletText("Assimp 4.1.0");
-		ImGui::BulletText("DevIL 1.8.0");
+		
+		SDL_version compiled;
+		SDL_GetVersion(&compiled);
+		ImGui::BulletText("SDL %d.%d.%d", compiled.major, compiled.minor, compiled.patch);
+		ImGui::BulletText("Glew %s.%s.%s", glewGetString(GLEW_VERSION_MAJOR), glewGetString(GLEW_VERSION_MINOR), glewGetString(GLEW_VERSION_MICRO));
+		ImGui::BulletText("ImGui %.5s", ImGui::GetVersion());
+		ImGui::BulletText("OpenGL %.5s", glGetString(GL_VERSION));
+		//ImGui::BulletText("MathGeoLib 1.5");
+		ImGui::BulletText("Assimp %d.%d.%d", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionRevision());
+		ImGui::BulletText("DevIL %d", IL_VERSION);
 		ImGui::Spacing();
 		ImGui::Spacing();
 
