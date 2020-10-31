@@ -7,6 +7,7 @@ struct PhysMotor3D;
 
 class myMesh;
 class myTexture;
+class GameObject;
 
 class ModuleSceneIntro : public Module
 {
@@ -19,6 +20,7 @@ public:
 	void Draw();
 	bool CleanUp();
 
+	GameObject* CreateGameObject();
 
 public:
 
@@ -26,4 +28,7 @@ public:
 
 	std::vector<myMesh> meshes;
 	std::vector<myTexture> textures;
+
+	std::vector<GameObject*> gameObjects;
+
 };

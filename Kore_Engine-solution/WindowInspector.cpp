@@ -23,6 +23,10 @@ bool WindowInspector::Draw()
 	{
 		ImGui::Begin("Inspector", &App->ui->inspectorIsActive);
 
+		if (ImGui::CollapsingHeader("Transform"))
+		{
+			
+		}
 		ImGui::End();
 	}
 	return true;

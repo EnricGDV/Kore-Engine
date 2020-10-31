@@ -1,12 +1,21 @@
 #ifndef __COMPONENT__
 #define __COMPONENT__
 
+class GameObject;
+
+enum Type
+{
+	TRANSFORM,
+	MESH,
+	MATERIAL,
+	NONE
+};
 
 class Component
 {
 public:
 
-	Component();
+	Component(GameObject* GameObj, Type type);
 	virtual ~Component();
 
 	virtual bool Update();
@@ -14,14 +23,9 @@ public:
 
 public:
 
-	enum Type
-	{
-		TRANSFORM,
-		MESH,
-		MATERIAL,
-		NONE
-	};
-
+	GameObject* GameObj;
+	Type type;
+	
 };
 
 #endif

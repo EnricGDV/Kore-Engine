@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Importer.h"
+#include "GameObject.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -48,4 +49,15 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::Draw()
 {
 	
+}
+
+GameObject* ModuleSceneIntro::CreateGameObject()
+{
+	std::string GOName = "GameObject "; 
+	GOName.append(std::to_string(gameObjects.size()));
+
+	GameObject* go = new GameObject(GOName);
+
+	gameObjects.push_back(go);
+	return go;
 }

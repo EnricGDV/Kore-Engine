@@ -1,8 +1,8 @@
 #include "Component.h"
 
-Component::Component()
+Component::Component(GameObject* GameObj, Type type)
 {
-
+	this->GameObj = GameObj;
 }
 
 Component::~Component()

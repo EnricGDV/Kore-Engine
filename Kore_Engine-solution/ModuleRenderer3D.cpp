@@ -524,6 +524,7 @@ void ModuleRenderer3D::GenerateMeshes()
 {
 	for (int i = 0; i < App->scene_intro->meshes.size(); ++i)
 	{
+
 		glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_vertex));
 		glBindBuffer(GL_ARRAY_BUFFER, App->scene_intro->meshes[i].id_vertex);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * App->scene_intro->meshes[i].num_vertices * 3, App->scene_intro->meshes[i].vertices, GL_STATIC_DRAW);
