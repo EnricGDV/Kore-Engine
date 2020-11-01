@@ -62,8 +62,7 @@ bool WindowInspector::Draw()
 						ImGui::Checkbox("Active", &App->scene_intro->selectedGameObject->mesh->isActive); ImGui::SameLine();
 						if (ImGui::Button("Delete Component"))
 						{
-							App->scene_intro->selectedGameObject->components[i]->Disable();
-							App->scene_intro->meshes.erase(App->scene_intro->meshes.begin() + i);
+							App->scene_intro->selectedGameObject->mesh->Disable();
 						}
 
 						ImGui::Text("Num Vertices: "); ImGui::SameLine(); ImGui::TextColored({ 1.0f, 0.f, 0.7f, 1.f }, "%d", App->scene_intro->selectedGameObject->mesh->num_vertices);
