@@ -115,7 +115,6 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 							m.materialpath = materialpath.C_Str();
 							App->scene_intro->textures.push_back(LoadTexture(m.materialpath));
 							App->renderer3D->GenerateTextures();
-							App->renderer3D->num_tex++;
 							childgo->material->isActive = true;
 						}
 
@@ -201,7 +200,6 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 						m.materialpath = materialpath.C_Str();
 						App->scene_intro->textures.push_back(LoadTexture(m.materialpath));
 						App->renderer3D->GenerateTextures();
-						App->renderer3D->num_tex++;
 						go->material->isActive = true;
 
 					}

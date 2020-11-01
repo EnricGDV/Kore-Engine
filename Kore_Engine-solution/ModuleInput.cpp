@@ -132,8 +132,8 @@ update_status ModuleInput::PreUpdate(float dt)
 						{
 							App->scene_intro->textures.push_back(Importer::LoadTexture(drop_path));
 							App->renderer3D->GenerateTextures();
-							App->renderer3D->num_tex++;
 
+							App->scene_intro->selectedGameObject->material->isActive = true;
 							App->scene_intro->selectedGameObject->material->width = App->scene_intro->textures.back().width;
 							App->scene_intro->selectedGameObject->material->height = App->scene_intro->textures.back().height;
 							App->scene_intro->selectedGameObject->material->path = App->scene_intro->textures.back().path;

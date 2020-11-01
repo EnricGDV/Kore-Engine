@@ -6,6 +6,7 @@
 #include "ComponentMesh.h"
 
 enum Type;
+class ComponentTransform;
 
 class GameObject
 {
@@ -23,7 +24,7 @@ public:
 	bool active = true;
 	bool selected = false;
 	vector<Component*> components;
-	//ComponentTransform* transform;
+	ComponentTransform* transform;
 	ComponentMesh* mesh;
 	ComponentMaterial* material;
 

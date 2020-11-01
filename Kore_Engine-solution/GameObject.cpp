@@ -4,7 +4,7 @@
 GameObject::GameObject(string name)
 {
 	this->name = name;
-	//transform = (ComponentTransform*)CreateComponent(Type::TRANSFORM);
+	transform = (ComponentTransform*)CreateComponent(Type::TRANSFORM);
 	mesh = (ComponentMesh*)CreateComponent(Type::MESH);
 	material = (ComponentMaterial*)CreateComponent(Type::MATERIAL);
 

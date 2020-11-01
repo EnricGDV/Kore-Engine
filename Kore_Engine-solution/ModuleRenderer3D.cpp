@@ -638,7 +638,7 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 		if (isCheckerTex)
 			glBindTexture(GL_TEXTURE_2D, checkerImage_id);
 		if (!isCheckerTex)
-			glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[num_tex].id);
+			glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[0].id);
 	}
 	else
 	{
