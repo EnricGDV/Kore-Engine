@@ -491,7 +491,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			{
 				drawTex = false;
 			}
-			if (App->scene_intro->gameObjects[i]->active && App->scene_intro->gameObjects[i]->mesh->isActive)
+			if (App->scene_intro->gameObjects[i]->active && App->scene_intro->gameObjects[i]->mesh->isActive && App->scene_intro->gameObjects[i]->mesh->type == Type::MESH)
 			{
 				Draw(&App->scene_intro->meshes[i]);
 			}
