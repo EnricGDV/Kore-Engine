@@ -55,7 +55,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 		if (scene->mRootNode->mNumChildren > 0)
 		{
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array
-			for (int i = 0; i < scene->mRootNode->mNumChildren; ++i)
+			for (int i = 0; i < scene->mNumMeshes; ++i)
 			{
 				
 				if (scene->mRootNode->mChildren[i]->mNumMeshes > 0)
