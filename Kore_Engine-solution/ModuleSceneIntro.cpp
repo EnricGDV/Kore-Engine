@@ -22,6 +22,14 @@ bool ModuleSceneIntro::Start()
 	meshes = Importer::LoadMeshes("Assets/Models/bakerhouse.fbx");
 
 	textures.push_back(Importer::LoadTexture("Assets/Textures/Baker_house.png"));
+	for (int i = 0; i < gameObjects.size(); ++i)
+	{
+		gameObjects[i]->material->width = App->scene_intro->textures.back().width;
+		gameObjects[i]->material->height = App->scene_intro->textures.back().height;
+		gameObjects[i]->material->path = App->scene_intro->textures.back().path;
+		gameObjects[i]->material->isActive = true;
+	}
+	
 
 
 

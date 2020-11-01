@@ -69,8 +69,8 @@ bool WindowConfig::Draw()
 		{
 			ImGui::Checkbox("Active", &App->window->active);
 			ImGui::SliderFloat("Brightness", &App->ui->brightness, 0.0f, 1.0f);
-			ImGui::SliderInt("Width", &App->ui->windowWidth, 0.0f, 1920);
-			ImGui::SliderInt("Height", &App->ui->windowHeight, 0.0f, 1080);
+			ImGui::SliderInt("Width", &App->ui->windowWidth, 640, 1920);
+			ImGui::SliderInt("Height", &App->ui->windowHeight, 480, 1080);
 			ImGui::Checkbox("Fullscreen", &App->ui->fullscreen); ImGui::SameLine(); ImGui::Checkbox("Resizable", &App->ui->resizable);
 			ImGui::Checkbox("Borderless", &App->ui->borderless); ImGui::SameLine(); ImGui::Checkbox("Full Desktop", &App->ui->fulldesktop);
 			ImGui::Spacing();

@@ -19,5 +19,7 @@ public:
 
 	const char* path;
 
+	bool isCheckers = false;
+
 };
 

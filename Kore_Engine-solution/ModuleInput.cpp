@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "Importer.h"
+#include "GameObject.h"
 
 #define MAX_KEYS 300
 
@@ -123,18 +124,34 @@ update_status ModuleInput::PreUpdate(float dt)
 						App->renderer3D->GenerateMeshes();
 
 						LOG("3D Model from %s was dropped into the scene", drop_path);
+						App->ConsoleLog("3D Model from %s was dropped into the scene", drop_path);
 					}
 					else if(GetExtension(drop_path) == ".png" || GetExtension(drop_path) == ".dds")
 					{
-						App->scene_intro->textures.push_back(Importer::LoadTexture(drop_path));
-						App->renderer3D->GenerateTextures();
-						App->renderer3D->num_tex++;
+						if (App->scene_intro->isSelected)
+						{
+							App->scene_intro->textures.push_back(Importer::LoadTexture(drop_path));
+							App->renderer3D->GenerateTextures();
+							App->renderer3D->num_tex++;
 
-						LOG("Texture Image from %s was dropped into the scene", drop_path);
+							App->scene_intro->selectedGameObject->material->width = App->scene_intro->textures.back().width;
+							App->scene_intro->selectedGameObject->material->height = App->scene_intro->textures.back().height;
+							App->scene_intro->selectedGameObject->material->path = App->scene_intro->textures.back().path;
+							App->scene_intro->selectedGameObject->material->path = App->scene_intro->textures.back().path;
+
+							LOG("Texture Image from %s was dropped into the scene", drop_path);
+							App->ConsoleLog("Texture Image from %s was dropped into the scene", drop_path);
+						}
+						else
+						{
+							LOG("Error: you weren't selecting any object!");
+							App->ConsoleLog("Error: you weren't selecting any object!");
+						}
 					}
 					else
 					{
 						LOG("Error: kore engine doesn't support the dropped file extension!");
+						App->ConsoleLog("Error: kore engine doesn't support the dropped file extension!");
 					}
 				}
 

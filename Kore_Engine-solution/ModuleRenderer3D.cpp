@@ -7,6 +7,7 @@
 #include "Libraries/Glew/include/GL/glew.h"
 #include "Libraries/SDL/include/SDL_opengl.h"
 #include "Importer.h"
+#include "GameObject.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -472,7 +473,30 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	for (int i = 0; i < App->scene_intro->meshes.size(); ++i)
 	{
-		Draw(&App->scene_intro->meshes[i]);
+		if (App->scene_intro->rootGameObject->active)
+		{
+			if (App->scene_intro->gameObjects[i]->material->isCheckers)
+			{
+				isCheckerTex = true;
+			}
+			if (!App->scene_intro->gameObjects[i]->material->isCheckers)
+			{
+				isCheckerTex = false;
+			}
+			if (App->scene_intro->gameObjects[i]->material->isActive)
+			{
+				drawTex = true;
+			}
+			if (!App->scene_intro->gameObjects[i]->material->isActive)
+			{
+				drawTex = false;
+			}
+			if (App->scene_intro->gameObjects[i]->active && App->scene_intro->gameObjects[i]->mesh->isActive)
+			{
+				Draw(&App->scene_intro->meshes[i]);
+			}
+		}
+		
 	}
 
 	//glEnableClientState(GL_VERTEX_ARRAY);
@@ -585,7 +609,10 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
+	if (drawNormals)
+	{
+		glEnableClientState(GL_NORMAL_ARRAY);
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -593,19 +620,49 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_texcoord);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	if(isWireframe)
+	if (isWireframe)
+	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glColor3f(0.f, 1.f, 0.5f);
+	}
+	
+	if (drawNormals)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
+		glNormalPointer(GL_FLOAT, 0, NULL);
+	}
+	
 
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
-	glNormalPointer(GL_FLOAT, 0, NULL);
-	glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[num_tex].id);
+	if (drawTex && App->scene_intro->textures.size() > 0)
+	{
+		if (isCheckerTex)
+			glBindTexture(GL_TEXTURE_2D, checkerImage_id);
+		if (!isCheckerTex)
+			glBindTexture(GL_TEXTURE_2D, App->scene_intro->textures[num_tex].id);
+	}
+	else
+	{
+		if (isCheckerTex)
+			glBindTexture(GL_TEXTURE_2D, checkerImage_id);
+	}
+
+
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glEnableClientState(GL_NORMAL_ARRAY);
+	if ((drawTex && App->scene_intro->textures.size() > 0) || isCheckerTex)
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	
+	if (drawNormals)
+	{
+		glDisableClientState(GL_NORMAL_ARRAY);
+	}
+	
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	if(isWireframe)
+	if (isWireframe)
+	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 }

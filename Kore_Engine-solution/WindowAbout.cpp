@@ -5,7 +5,6 @@
 #include "Libraries/DevIL/include/IL/ilut.h"
 #include "Libraries/Assimp/include/version.h"
 
-
 WindowAbout::WindowAbout() : Window()
 {
 }
@@ -47,7 +46,7 @@ bool WindowAbout::Draw()
 		ImGui::BulletText("Glew %s.%s.%s", glewGetString(GLEW_VERSION_MAJOR), glewGetString(GLEW_VERSION_MINOR), glewGetString(GLEW_VERSION_MICRO));
 		ImGui::BulletText("ImGui %.5s", ImGui::GetVersion());
 		ImGui::BulletText("OpenGL %.5s", glGetString(GL_VERSION));
-		//ImGui::BulletText("MathGeoLib 1.5");
+		ImGui::BulletText("MathGeoLib 1.5");
 		ImGui::BulletText("Assimp %d.%d.%d", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionRevision());
 		ImGui::BulletText("DevIL %d", IL_VERSION);
 		ImGui::Spacing();

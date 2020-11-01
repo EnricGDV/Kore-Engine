@@ -23,5 +23,6 @@ bool Component::Update()
 
 bool Component::Disable()
 {
+	type = NONE;
 	return true;
 }

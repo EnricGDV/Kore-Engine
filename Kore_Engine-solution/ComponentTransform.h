@@ -20,7 +20,6 @@ public:
 public:
 
 	float3 pos;
-	//std::vector<float*> pos;
 	float3 rot;
 	float3 scale;
 

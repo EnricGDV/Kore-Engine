@@ -20,11 +20,15 @@ public:
 public:
 
 	string name;
+	bool active = true;
+	bool selected = false;
 	vector<Component*> components;
-	//ComponentTransform* transform = nullptr;
+	//ComponentTransform* transform;
 	ComponentMesh* mesh;
 	ComponentMaterial* material;
 
+	vector<GameObject*> children;
+	GameObject* father;
 
 };
 

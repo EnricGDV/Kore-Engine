@@ -45,6 +45,7 @@ public:
 	uint color_id;
 	uint checkerImage_id;
 	
+	
 
 	//Buttons
 	bool isDepthTest = true;
@@ -60,6 +61,9 @@ public:
 	bool switchColorMaterial = true;
 	bool switchGlTexture2D = true;
 
+	bool drawNormals = false;
+	bool isCheckerTex = false;
+	bool drawTex = true;
 
 	float brightness = 1.f;
 	bool debug_draw = false;

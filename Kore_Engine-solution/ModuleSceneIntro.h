@@ -32,4 +32,8 @@ public:
 
 	std::vector<GameObject*> gameObjects;
 
+	bool isSelected = false;
+	GameObject* selectedGameObject;
+	GameObject* rootGameObject;
+
 };

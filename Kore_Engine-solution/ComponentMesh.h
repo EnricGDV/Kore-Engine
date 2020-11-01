@@ -19,6 +19,8 @@ public:
 	uint id_index = 0;
 	uint num_indices = 0;
 
+	uint num_faces = 0;
+
 	uint id_vertex = 0;
 	uint num_vertices = 0;
 	uint id_normal = 0;

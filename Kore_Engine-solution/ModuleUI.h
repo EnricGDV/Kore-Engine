@@ -80,6 +80,7 @@ public:
 	bool fulldesktop = false;
 	bool isFulldesktop = false;
 
+
 	std::list<Window*> windows;
 };
 
