@@ -125,6 +125,8 @@ update_status ModuleInput::PreUpdate(float dt)
 
 						LOG("3D Model from %s was dropped into the scene", drop_path);
 						App->ConsoleLog("3D Model from %s was dropped into the scene", drop_path);
+						App->scene_intro->isSelected = false;
+						App->scene_intro->selectedGameObject = nullptr;
 					}
 					else if(GetExtension(drop_path) == ".png" || GetExtension(drop_path) == ".dds")
 					{

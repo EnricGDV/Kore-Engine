@@ -56,21 +56,29 @@ bool WindowMenuBar::Draw()
 		if (ImGui::MenuItem("Cube"))
 		{
 			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Cube.FBX");
+			App->scene_intro->isSelected = false;
+			App->scene_intro->selectedGameObject = nullptr;
 			App->renderer3D->GenerateMeshes();
 		}
 		if (ImGui::MenuItem("Sphere"))
 		{
 			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Sphere.FBX");
+			App->scene_intro->isSelected = false;
+			App->scene_intro->selectedGameObject = nullptr;
 			App->renderer3D->GenerateMeshes();
 		}
 		if (ImGui::MenuItem("Pyramid"))
 		{
 			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Pyramid.FBX");
+			App->scene_intro->isSelected = false;
+			App->scene_intro->selectedGameObject = nullptr;
 			App->renderer3D->GenerateMeshes();
 		}
 		if (ImGui::MenuItem("Cylinder"))
 		{
 			App->scene_intro->meshes = Importer::LoadMeshes("Assets/Models/Primitives/Cylinder.FBX");
+			App->scene_intro->isSelected = false;
+			App->scene_intro->selectedGameObject = nullptr;
 			App->renderer3D->GenerateMeshes();
 		}
 
