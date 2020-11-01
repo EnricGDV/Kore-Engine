@@ -1,6 +1,7 @@
 #ifndef __COMPONENT__
 #define __COMPONENT__
 
+
 class GameObject;
 
 enum Type
@@ -15,17 +16,20 @@ class Component
 {
 public:
 
-	Component(GameObject* GameObj, Type type);
+	Component(GameObject* owner, Type type);
 	virtual ~Component();
 
+	virtual bool Enable();
 	virtual bool Update();
-	virtual bool Draw();
+	virtual bool Disable();
 
 public:
 
-	GameObject* GameObj;
+	GameObject* owner;
 	Type type;
 	
+	bool isActive = false;
+
 };
 
 #endif

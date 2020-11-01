@@ -49,7 +49,7 @@ public:
 	bool consoleIsActive = true;
 	bool configIsActive = true;
 	bool hierarchyIsActive = true;
-	bool inspectorIsActive = false;
+	bool inspectorIsActive = true;
 
 	//Config
 	char* textname;

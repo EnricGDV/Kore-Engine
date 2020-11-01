@@ -23,6 +23,8 @@ bool ModuleSceneIntro::Start()
 
 	textures.push_back(Importer::LoadTexture("Assets/Textures/Baker_house.png"));
 
+
+
 	game_timer.Start();
 
 

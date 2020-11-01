@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "WindowInspector.h"
+#include "ModuleSceneIntro.h"
 
 WindowInspector::WindowInspector() : Window()
 {
@@ -22,7 +23,7 @@ bool WindowInspector::Draw()
 	if (App->ui->inspectorIsActive)
 	{
 		ImGui::Begin("Inspector", &App->ui->inspectorIsActive);
-
+	
 		if (ImGui::CollapsingHeader("Transform"))
 		{
 			

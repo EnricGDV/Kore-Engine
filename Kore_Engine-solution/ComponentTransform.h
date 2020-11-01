@@ -3,19 +3,26 @@
 #include "Globals.h"
 #include "GameObject.h"
 
+#include "Libraries/MathGeoLib/include/MathBuildConfig.h"
+#include "Libraries/MathGeoLib/include/MathGeoLib.h"
+
 class ComponentTransform : public Component
 {
 public:
-	ComponentTransform(GameObject* GameObj);
+	ComponentTransform(GameObject* owner);
 	~ComponentTransform();
 
-	std::vector<float*> GetPos() const;
+	float3 GetPos() const;
+	float3 GetRot() const;
+	float3 GetScale() const;
+
 
 public:
 
-	std::vector<float*> pos;
-	std::vector<float*> rot;
-	std::vector<float*> scale;
+	float3 pos;
+	//std::vector<float*> pos;
+	float3 rot;
+	float3 scale;
 
 
 };

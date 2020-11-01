@@ -1,8 +1,9 @@
 #include "Component.h"
 
-Component::Component(GameObject* GameObj, Type type)
+Component::Component(GameObject* owner, Type type)
 {
-	this->GameObj = GameObj;
+	this->owner = owner;
+	this->type = type;
 }
 
 Component::~Component()
@@ -10,12 +11,17 @@ Component::~Component()
 
 }
 
+bool Component::Enable()
+{
+	return true;
+}
+
 bool Component::Update()
 {
 	return true;
 }
 
-bool Component::Draw()
+bool Component::Disable()
 {
 	return true;
 }

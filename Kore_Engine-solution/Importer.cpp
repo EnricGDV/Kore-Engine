@@ -1,5 +1,8 @@
 #include "Importer.h"
 #include "Application.h"
+#include "Globals.h"
+#include "GameObject.h"
+
 
 #include "Libraries/Assimp/include/cimport.h"
 #include "Libraries/Assimp/include/scene.h"
@@ -45,9 +48,16 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (int i = 0; i < scene->mNumMeshes; ++i)
 		{
-			myMesh m;
+			GameObject* go = App->scene_intro->CreateGameObject();
+			
+			myMesh m;		
+
 			m.num_vertices = scene->mMeshes[i]->mNumVertices;
+			go->mesh->num_vertices = m.num_vertices;
+
 			m.vertices = new float[m.num_vertices * 3];
+			go->mesh->vertices = m.vertices;
+
 			memcpy(m.vertices, scene->mMeshes[i]->mVertices, sizeof(float) * m.num_vertices * 3);
 			LOG("New mesh with %d vertices", m.num_vertices);
 			App->ConsoleLog("New mesh with %d vertices", m.num_vertices);
@@ -58,6 +68,8 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 				LOG("Normals loaded");
 				App->ConsoleLog("Normals loaded");
 			}
+
+			go->mesh->normals = m.normals;
 
 			if (scene->mMeshes[i]->HasTextureCoords(0))
 			{
@@ -71,6 +83,8 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 				App->ConsoleLog("UVs loaded");
 			}
 
+			go->mesh->textureCoords = m.textureCoords;
+			
 			if (scene->HasMaterials() && scene->mMeshes[i]->mMaterialIndex != NULL)
 			{
 				aiString materialpath;
@@ -83,11 +97,15 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 				
 			}
 
+			go->mesh->materialpath = m.materialpath;
+
 			// copy faces
 			if (scene->mMeshes[i]->HasFaces())
 			{
 				m.num_indices = scene->mMeshes[i]->mNumFaces * 3;
 				m.indices = new uint[m.num_indices]; // assume each face is a triangle
+				go->mesh->num_indices = m.num_indices;
+				go->mesh->indices = m.indices;
 				for (uint j = 0; j < scene->mMeshes[i]->mNumFaces; ++j)
 				{
 					if (scene->mMeshes[i]->mFaces[j].mNumIndices != 3)
@@ -100,6 +118,9 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 						memcpy(&m.indices[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, 3 * sizeof(uint));
 					}
 				}
+				
+				
+
 			}
 			meshvector.push_back(m);
 		}
@@ -112,7 +133,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 		App->ConsoleLog("Error loading scene % s", file_path);
 		return meshvector;
 	}
-		
+	
 }
 
 myTexture Importer::LoadTexture(const char* file_path)
@@ -137,6 +158,12 @@ myTexture Importer::LoadTexture(const char* file_path)
 	tex.width = ilGetInteger(IL_IMAGE_WIDTH);
 	tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
 
+	// PASSING MATERIAL DATA TO GAMEOBJECT 
+	//go->material->data = tex.data;
+	//go->material->height = tex.height;
+	//go->material->width = tex.width;
+	//go->material->id = tex.id;
+	//go->material->path = tex.path;
 	return tex;
 }
 
