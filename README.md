@@ -12,7 +12,6 @@ You can check this project at https://github.com/EnricGDV/Kore-Engine
 - https://github.com/RustikTie
 
 
-
 ## How to Use
 
 ### MenuBar
@@ -54,3 +53,10 @@ You can check this project at https://github.com/EnricGDV/Kore-Engine
 - You can drag and drop any .FBX, .fbx, .dds or .png file into the scene in order to import 3D models and textures. It may happen that there isn't any feedback
   from the program, if the console doesn't show any errors, try again, probably the input wasn't detected. 
 - Before dropping a texture, you should have selected a game object. If not, the console will return an error and the texture won't be importer!
+
+
+## Additional Comments
+
+- Lenna and the Pink Baker_House texture are since we thought they could be useful to try stuff around, for example with the primitives.
+
+- We hope you enjoy our delivery! :)
