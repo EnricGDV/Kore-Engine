@@ -38,7 +38,14 @@ bool WindowInspector::Draw()
 		{
 			if (App->scene_intro->isSelected)
 			{
-				
+				float pos[3] = { App->scene_intro->selectedGameObject->transform->pos.x, App->scene_intro->selectedGameObject->transform->pos.y, App->scene_intro->selectedGameObject->transform->pos.z };
+				ImGui::InputFloat3("Position", pos, 3);
+
+				int rot[3] = { (int)App->scene_intro->selectedGameObject->transform->rot.x, (int)App->scene_intro->selectedGameObject->transform->rot.y, (int)App->scene_intro->selectedGameObject->transform->rot.z };
+				ImGui::SliderInt3("Rotation", rot, 0.f, 360.f, "%d deg");
+
+				float esc[3] = { App->scene_intro->selectedGameObject->transform->rot.x, App->scene_intro->selectedGameObject->transform->rot.y, App->scene_intro->selectedGameObject->transform->rot.z };
+				ImGui::InputFloat3("Scale", pos, 3);
 			}
 		}
 
