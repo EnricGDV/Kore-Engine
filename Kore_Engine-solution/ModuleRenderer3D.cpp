@@ -608,11 +608,8 @@ void ModuleRenderer3D::GenerateTextures()
 void ModuleRenderer3D::Draw(myMesh* mesh)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	if (drawNormals)
-	{
-		glEnableClientState(GL_NORMAL_ARRAY);
-	}
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);		
+	glEnableClientState(GL_NORMAL_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -628,9 +625,27 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 	
 	if (drawNormals)
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
-		glNormalPointer(GL_FLOAT, 0, NULL);
+
+		for (int i = 0; i < mesh->num_vertices * 3; i += 3)
+		{
+			glBegin(GL_LINES);
+			glColor3f(0.f, 1.f, 0.f);
+
+			float vX = mesh->vertices[i];
+			float vY = mesh->vertices[i + 1];
+			float vZ = mesh->vertices[i + 2];
+
+			
+			glVertex3f(vX, vY, vZ);
+			glVertex3f(vX + mesh->normals[i], vY + mesh->normals[i + 1], vZ + mesh->normals[i + 2]);
+		}
+
+		glEnd();
+		glColor3f(1.f, 1.f, 1.f);
 	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
+	glNormalPointer(GL_FLOAT, 0, NULL);
 	
 
 	if (drawTex && App->scene_intro->textures.size() > 0)
@@ -653,16 +668,14 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	
-	if (drawNormals)
-	{
-		glDisableClientState(GL_NORMAL_ARRAY);
-	}
-	
+
+	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	if (isWireframe)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glColor3f(1.f, 1.f, 1.f);
 	}
 }
