@@ -6,6 +6,7 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleFileSystem.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleUI.h"
@@ -22,6 +23,7 @@ public:
 	ModuleWindow* window;
 	ModuleInput* input;
 	ModuleSceneIntro* scene_intro;
+	ModuleFileSystem* file_system;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleUI* ui;

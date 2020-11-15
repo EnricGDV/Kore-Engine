@@ -8,6 +8,7 @@ Application::Application()
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	scene_intro = new ModuleSceneIntro(this);
+	file_system = new ModuleFileSystem(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	ui = new ModuleUI(this);
@@ -20,9 +21,12 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(file_system);
 
 	// Scenes
 	AddModule(scene_intro);
+
+	//UI
 	AddModule(ui);
 
 	// Renderer last!

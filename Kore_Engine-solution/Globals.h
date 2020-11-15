@@ -24,6 +24,7 @@ void log(const char file[], int line, const char* format, ...);
 
 
 typedef unsigned int uint;
+typedef unsigned __int64 uint64;
 
 enum update_status
 {
@@ -41,5 +42,6 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
+#define ORGANIZATION "UPC"
 #define TITLE "Kore Engine"
 #define FPS_LOG_SIZE 100
