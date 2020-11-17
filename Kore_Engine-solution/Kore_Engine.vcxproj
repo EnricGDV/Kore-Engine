@@ -100,6 +100,7 @@
     <ClInclude Include="Libraries\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Libraries\ImGui\imstb_textedit.h" />
     <ClInclude Include="Libraries\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Libraries\Parson\parson.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleFileSystem.h" />
@@ -135,6 +136,7 @@
     <ClCompile Include="Libraries\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Libraries\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Libraries\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Libraries\Parson\parson.c" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />

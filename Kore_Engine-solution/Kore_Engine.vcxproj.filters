@@ -19,14 +19,20 @@
     <Filter Include="Sources\Modules\Game">
       <UniqueIdentifier>{83f46af7-e02f-40c0-9e56-41d76082527b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Tools\ImGui">
-      <UniqueIdentifier>{ab52aee1-3075-4023-81ed-5b18707ab47d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Modules\Windows">
       <UniqueIdentifier>{50fa332d-bfbc-46dd-9dda-a11e3fdaa1b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\Modules\GameObjects">
       <UniqueIdentifier>{1285c1bf-7c3f-4053-893a-0805e1cd19b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\External Libraries">
+      <UniqueIdentifier>{435ac11e-df36-46f3-a93a-bd0dfb639e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\External Libraries\ImGui">
+      <UniqueIdentifier>{ab52aee1-3075-4023-81ed-5b18707ab47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\External Libraries\Parson">
+      <UniqueIdentifier>{4beefd46-4550-477d-b4ac-ee9fa73722d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,28 +76,28 @@
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imconfig.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imgui.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imgui_impl_opengl3.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imgui_impl_sdl.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imgui_internal.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imstb_rectpack.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imstb_textedit.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ImGui\imstb_truetype.h">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="WindowConsole.h">
       <Filter>Sources\Modules\Windows</Filter>
@@ -138,6 +144,9 @@
     <ClInclude Include="PathNode.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\Parson\parson.h">
+      <Filter>Sources\External Libraries\Parson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -180,22 +189,22 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\ImGui\imgui.cpp">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\ImGui\imgui_demo.cpp">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\ImGui\imgui_draw.cpp">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\ImGui\imgui_impl_opengl3.cpp">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\ImGui\imgui_impl_sdl.cpp">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\ImGui\imgui_widgets.cpp">
-      <Filter>Sources\Tools\ImGui</Filter>
+      <Filter>Sources\External Libraries\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="WindowConsole.cpp">
       <Filter>Sources\Modules\Windows</Filter>
@@ -238,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="ModuleFileSystem.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\Parson\parson.c">
+      <Filter>Sources\External Libraries\Parson</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
