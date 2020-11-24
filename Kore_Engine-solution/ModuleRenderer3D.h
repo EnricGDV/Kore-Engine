@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "Libraries/MathGeoLib/include/MathBuildConfig.h"
+#include "Libraries/MathGeoLib/include/MathGeoLib.h"
 
 
 
@@ -28,7 +30,7 @@ public:
 	void GenerateMeshes();
 	void GenerateTextures();
 
-	void Draw(myMesh* mesh);
+	void Draw(myMesh* mesh, float4x4 transform);
 
 public:
 

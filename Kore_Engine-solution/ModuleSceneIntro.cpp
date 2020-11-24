@@ -19,9 +19,9 @@ bool ModuleSceneIntro::Start()
 
 
 	Importer::Debug();
-	meshes = Importer::LoadMeshes("Assets/Models/bakerhouse.fbx");
+	meshes = Importer::LoadMeshes("Assets/Models/street2.fbx");
 
-	textures.push_back(Importer::LoadTexture("Assets/Textures/Baker_house.png"));
+	//textures.push_back(Importer::LoadTexture("Assets/Textures/blending_transparent_window.png"));
 	for (int i = 0; i < gameObjects.size(); ++i)
 	{
 		gameObjects[i]->material->width = App->scene_intro->textures.back().width;

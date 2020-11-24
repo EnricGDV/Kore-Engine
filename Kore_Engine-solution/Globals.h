@@ -20,6 +20,7 @@ void log(const char file[], int line, const char* format, ...);
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
+#define PI 3.14159
 #define HAVE_M_PI
 
 
@@ -45,3 +46,18 @@ enum update_status
 #define ORGANIZATION "UPC"
 #define TITLE "Kore Engine"
 #define FPS_LOG_SIZE 100
+
+
+// File System Paths --------
+
+#define LIBRARY_PATH "Engine/Library"
+#define FOLDERS_PATH "Engine/Library/Folders/"
+#define MESHES_PATH "Engine/Library/Meshes/"
+#define MATERIALS_PATH "Engine/Library/Materials/"
+#define TEXTURES_PATH "Engine/Library/Textures/"
+#define MODELS_PATH "Engine/Library/Models/"
+#define ANIMATIONS_PATH "Engine/Library/Animations/"
+#define BONES_PATH "Engine/Library/Bones/"
+#define PARTICLES_PATH "Engine/Library/ParticleSystems/"
+#define SHADERS_PATH "Engine/Library/Shaders/"
+#define SCENES_PATH "Engine/Library/Scenes/"

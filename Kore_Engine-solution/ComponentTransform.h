@@ -16,12 +16,20 @@ public:
 	float3 GetRot() const;
 	float3 GetScale() const;
 
+	Quat GetRotQuat() const;
+
+	void UpdateMatrix();
+
 
 public:
 
 	float3 pos;
 	float3 rot;
 	float3 scale;
+
+	Quat rotQuat;
+
+	float4x4 matrix;
 
 
 };

@@ -128,6 +128,14 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
+
+		//Transparency
+		//glEnable(GL_ALPHA_TEST);
+		//glAlphaFunc(GL_GREATER, 0.5);
+
+		//Blending
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	// Projection matrix for
@@ -493,7 +501,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			}
 			if (App->scene_intro->gameObjects[i]->active && App->scene_intro->gameObjects[i]->mesh->isActive && App->scene_intro->gameObjects[i]->mesh->type == Type::MESH)
 			{
-				Draw(&App->scene_intro->meshes[i]);
+				Draw(&App->scene_intro->meshes[i], App->scene_intro->gameObjects[i]->transform->matrix);
 			}
 		}
 		
@@ -605,8 +613,12 @@ void ModuleRenderer3D::GenerateTextures()
 	
 }
 
-void ModuleRenderer3D::Draw(myMesh* mesh)
+void ModuleRenderer3D::Draw(myMesh* mesh, float4x4 transform)
 {
+	glPushMatrix();
+	glMultMatrixf((GLfloat*)&transform.Transposed());
+
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);		
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -678,4 +690,6 @@ void ModuleRenderer3D::Draw(myMesh* mesh)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3f(1.f, 1.f, 1.f);
 	}
+
+	glPopMatrix();
 }

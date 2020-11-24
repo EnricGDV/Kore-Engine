@@ -3,7 +3,6 @@
 #include "Globals.h"
 #include "GameObject.h"
 
-
 #include "Libraries/Assimp/include/cimport.h"
 #include "Libraries/Assimp/include/scene.h"
 #include "Libraries/Assimp/include/postprocess.h"
@@ -15,6 +14,7 @@
 #pragma comment (lib, "Libraries/DevIL/libx86/DevIL.lib")
 #pragma comment (lib, "Libraries/DevIL/libx86/ILU.lib")
 #pragma comment (lib, "Libraries/DevIL/libx86/ILUT.lib")
+
 
 void Importer::Debug()
 {
@@ -73,6 +73,28 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 						childgo->name = scene->mMeshes[index]->mName.C_Str();
 						childgo->mesh->isActive = true;
 
+						//Importing Transformation
+						aiVector3D aiPos;
+						aiVector3D aiScale;
+						aiQuaternion aiRot;
+
+						scene->mRootNode->mChildren[i]->mTransformation.Decompose(aiScale, aiRot, aiPos);
+
+						childgo->transform->pos.x = aiPos.x;
+						childgo->transform->pos.y = aiPos.y;
+						childgo->transform->pos.z = aiPos.z;
+
+						childgo->transform->scale.x = aiScale.x;
+						childgo->transform->scale.y = aiScale.y;
+						childgo->transform->scale.z = aiScale.z;
+
+						Quat rotquat(aiRot.z, aiRot.x, aiRot.y, aiRot.z);
+						childgo->transform->rotQuat = rotquat;
+						float3 rot(aiRot.GetEuler().x * RADTODEG, aiRot.GetEuler().y * RADTODEG, aiRot.GetEuler().z * RADTODEG);
+						childgo->transform->rot = rot;
+						childgo->transform->UpdateMatrix();
+
+						//Importing Vertices
 						m.num_vertices = scene->mMeshes[index]->mNumVertices;
 						childgo->mesh->num_vertices = m.num_vertices;
 
@@ -83,6 +105,8 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 						LOG("New mesh with %d vertices", m.num_vertices);
 						App->ConsoleLog("New mesh with %d vertices", m.num_vertices);
 
+
+						//Importing Normals
 						if (scene->mMeshes[index]->HasNormals())
 						{
 							m.normals = new float[m.num_vertices * 3];
@@ -93,6 +117,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 
 						childgo->mesh->normals = m.normals;
 
+						//Importing Texture Coordenates
 						if (scene->mMeshes[index]->HasTextureCoords(0))
 						{
 							m.textureCoords = new float[m.num_vertices * 2];
@@ -107,6 +132,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 
 						childgo->mesh->textureCoords = m.textureCoords;
 
+						//Importing Material 
 						if (scene->HasMaterials() && scene->mMeshes[index]->mMaterialIndex != NULL)
 						{
 							aiString materialpath;
@@ -158,6 +184,28 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 					go->name = scene->mRootNode->mChildren[i]->mName.C_Str();
 					go->mesh->isActive = true;
 
+					//Importing Transformation
+					aiVector3D aiPos;
+					aiVector3D aiScale;
+					aiQuaternion aiRot;
+
+					scene->mRootNode->mChildren[i]->mTransformation.Decompose(aiScale, aiRot, aiPos);
+
+					go->transform->pos.x = aiPos.x;
+					go->transform->pos.y = aiPos.y;
+					go->transform->pos.z = aiPos.z;
+
+					go->transform->scale.x = aiScale.x;
+					go->transform->scale.y = aiScale.y;
+					go->transform->scale.z = aiScale.z;
+
+					Quat rotquat(aiRot.z, aiRot.x, aiRot.y, aiRot.z);
+					go->transform->rotQuat = rotquat;
+					float3 rot(aiRot.GetEuler().x * RADTODEG, aiRot.GetEuler().y * RADTODEG, aiRot.GetEuler().z * RADTODEG);
+					go->transform->rot = rot;
+					go->transform->UpdateMatrix();
+
+					//Importing Vertices
 					m.num_vertices = scene->mMeshes[i]->mNumVertices;
 					go->mesh->num_vertices = m.num_vertices;
 
@@ -168,6 +216,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 					LOG("New mesh with %d vertices", m.num_vertices);
 					App->ConsoleLog("New mesh with %d vertices", m.num_vertices);
 
+					//Importing Normals
 					if (scene->mMeshes[i]->HasNormals())
 					{
 						m.normals = new float[m.num_vertices * 3];
@@ -178,6 +227,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 
 					go->mesh->normals = m.normals;
 
+					//Importing Texture Coordinates
 					if (scene->mMeshes[i]->HasTextureCoords(0))
 					{
 						m.textureCoords = new float[m.num_vertices * 2];
@@ -192,6 +242,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 
 					go->mesh->textureCoords = m.textureCoords;
 
+					//Importing Material
 					if (scene->HasMaterials() && scene->mMeshes[i]->mMaterialIndex != NULL)
 					{
 						aiString materialpath;

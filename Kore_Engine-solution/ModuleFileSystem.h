@@ -29,7 +29,7 @@ public:
 	// Called before quitting
 	bool CleanUp() override;
 
-	//void CreateLibraryDirectories();
+	void CreateLibraryDirectories();
 
 	// Utility functions
 	bool AddPath(const char* path_or_zip);

@@ -10,9 +10,13 @@ ComponentTransform::ComponentTransform(GameObject* owner) :Component(owner, Type
 	this->rot.y = 0;
 	this->rot.z = 0;
 
+	this->rotQuat = Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD);
+
 	this->scale.x = 1;
 	this->scale.y = 1;
 	this->scale.z = 1;
+
+	this->matrix = float4x4::FromTRS( pos, rotQuat, scale );
 
 }
 
@@ -30,7 +34,17 @@ float3 ComponentTransform::GetRot() const
 	return rot;
 }
 
+Quat ComponentTransform::GetRotQuat() const
+{
+	return rotQuat;
+}
+
 float3 ComponentTransform::GetScale() const
 {
 	return scale;
+}
+
+void ComponentTransform::UpdateMatrix()
+{
+	this->matrix = float4x4::FromTRS(pos, rotQuat, scale);
 }

@@ -21,11 +21,15 @@ ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Modul
 
 	//Setting the working directory as the writing directory
 	if (PHYSFS_setWriteDir(".") == 0)
+	{
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+		App->ConsoleLog("File System error while creating write dir: %s", PHYSFS_getLastError());
+	}
+		
 
 	AddPath("."); //Adding ProjectFolder (working directory)
 	AddPath("Assets");
-	//CreateLibraryDirectories();
+	CreateLibraryDirectories();
 }
 
 // Destructor
@@ -60,19 +64,19 @@ bool ModuleFileSystem::CleanUp()
 	return true;
 }
 
-//void ModuleFileSystem::CreateLibraryDirectories()
-//{
-//	CreateDir(LIBRARY_PATH);
-//	CreateDir(FOLDERS_PATH);
-//	CreateDir(MESHES_PATH);
-//	CreateDir(TEXTURES_PATH);
-//	CreateDir(MATERIALS_PATH);
-//	CreateDir(MODELS_PATH);
-//	CreateDir(ANIMATIONS_PATH);
-//	CreateDir(PARTICLES_PATH);
-//	CreateDir(SHADERS_PATH);
-//	CreateDir(SCENES_PATH);
-//}
+void ModuleFileSystem::CreateLibraryDirectories()
+{
+	CreateDir(LIBRARY_PATH);
+	CreateDir(FOLDERS_PATH);
+	CreateDir(MESHES_PATH);
+	CreateDir(TEXTURES_PATH);
+	CreateDir(MATERIALS_PATH);
+	CreateDir(MODELS_PATH);
+	CreateDir(ANIMATIONS_PATH);
+	CreateDir(PARTICLES_PATH);
+	CreateDir(SHADERS_PATH);
+	CreateDir(SCENES_PATH);
+}
 
 // Add a new zip file or folder
 bool ModuleFileSystem::AddPath(const char* path_or_zip)
