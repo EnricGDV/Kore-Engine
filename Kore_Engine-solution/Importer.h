@@ -60,4 +60,7 @@ namespace Importer
 
 	std::vector<myMesh> LoadMeshes(const char* file_path);
 	myTexture LoadTexture(const char* file_path);
+
+	uint64 SaveTexture(const myTexture* tex , char** fileBuffer);
+	void LoadTexture(const char* fileBuffer, myTexture* tex);
 }

@@ -54,10 +54,31 @@ enum update_status
 #define FOLDERS_PATH "Engine/Library/Folders/"
 #define MESHES_PATH "Engine/Library/Meshes/"
 #define MATERIALS_PATH "Engine/Library/Materials/"
-#define TEXTURES_PATH "Engine/Library/Textures/"
+#define TEXTURES_PATH "Library/Textures/"
 #define MODELS_PATH "Engine/Library/Models/"
 #define ANIMATIONS_PATH "Engine/Library/Animations/"
 #define BONES_PATH "Engine/Library/Bones/"
 #define PARTICLES_PATH "Engine/Library/ParticleSystems/"
 #define SHADERS_PATH "Engine/Library/Shaders/"
 #define SCENES_PATH "Engine/Library/Scenes/"
+
+
+// Deletes a buffer
+#define RELEASE( x )\
+    {\
+       if( x != nullptr )\
+       {\
+         delete x;\
+	     x = nullptr;\
+       }\
+    }
+
+// Deletes an array of buffers
+#define RELEASE_ARRAY( x )\
+	{\
+       if( x != nullptr )\
+       {\
+           delete[] x;\
+	       x = nullptr;\
+		 }\
+	 }

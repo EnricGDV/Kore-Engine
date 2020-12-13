@@ -71,3 +71,21 @@ GameObject* ModuleSceneIntro::CreateGameObject()
 	gameObjects.push_back(go);
 	return go;
 }
+
+void ModuleSceneIntro::Save()
+{
+	char* buffer;
+	uint64 size;
+
+	string texturePath = TEXTURES_PATH;
+	texturePath.append("CurrentTexture.ket");
+
+	size = Importer::SaveTexture(textures.end()._Ptr, &buffer);
+
+	if (size > 0)
+	{
+		App->file_system->Save(texturePath.c_str(), buffer, size);
+	}
+
+	
+}

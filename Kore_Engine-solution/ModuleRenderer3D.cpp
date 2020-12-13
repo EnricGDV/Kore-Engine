@@ -567,9 +567,9 @@ void ModuleRenderer3D::GenerateMeshes()
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * App->scene_intro->meshes[i].num_indices, App->scene_intro->meshes[i].indices, GL_STATIC_DRAW);
 
 
-			glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_texcoord));
-			glBindBuffer(GL_ARRAY_BUFFER, App->scene_intro->meshes[i].id_texcoord);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * App->scene_intro->meshes[i].num_vertices * 2, App->scene_intro->meshes[i].textureCoords, GL_STATIC_DRAW);
+		glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_texcoord));
+		glBindBuffer(GL_ARRAY_BUFFER, App->scene_intro->meshes[i].id_texcoord);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * App->scene_intro->meshes[i].num_vertices * 2, App->scene_intro->meshes[i].textureCoords, GL_STATIC_DRAW);
 
 		glGenBuffers(1, (GLuint*) & (App->scene_intro->meshes[i].id_normal));
 		glBindBuffer(GL_ARRAY_BUFFER, App->scene_intro->meshes[i].id_normal);

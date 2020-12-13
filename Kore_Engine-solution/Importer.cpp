@@ -108,7 +108,7 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 						//Creating AABB
 						m.CreateAABB();
 						childgo->mesh->bbox = m.aabb;
-
+						
 						//Importing Normals
 						if (scene->mMeshes[index]->HasNormals())
 						{
@@ -333,6 +333,27 @@ myTexture Importer::LoadTexture(const char* file_path)
 	//go->material->id = tex.id;
 	//go->material->path = tex.path;
 	return tex;
+}
+
+uint64 Importer::SaveTexture(const myTexture* tex, char** fileBuffer)
+{
+	ILuint size;
+	ILubyte* data;
+
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	size = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
+
+	if (size > 0) {
+		data = new ILubyte[size]; // allocate data buffer
+		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
+		{
+			*fileBuffer = (char*)data;
+			App->ConsoleLog("Started Saving Current Texture");
+		}	
+		RELEASE(data);
+	}
+
+	return size;
 }
 
 myMesh::myMesh()
