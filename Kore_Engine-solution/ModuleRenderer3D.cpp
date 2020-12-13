@@ -501,7 +501,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 			}
 			if (App->scene_intro->gameObjects[i]->active && App->scene_intro->gameObjects[i]->mesh->isActive && App->scene_intro->gameObjects[i]->mesh->type == Type::MESH)
 			{
-				Draw(&App->scene_intro->meshes[i], App->scene_intro->gameObjects[i]->transform->matrix);
+				Draw(&App->scene_intro->meshes[i], App->scene_intro->gameObjects[i]->transform->matrix, App->scene_intro->gameObjects[i]);
+				
 			}
 		}
 		
@@ -613,7 +614,7 @@ void ModuleRenderer3D::GenerateTextures()
 	
 }
 
-void ModuleRenderer3D::Draw(myMesh* mesh, float4x4 transform)
+void ModuleRenderer3D::Draw(myMesh* mesh, float4x4 transform, GameObject* go)
 {
 	glPushMatrix();
 	glMultMatrixf((GLfloat*)&transform.Transposed());
@@ -656,6 +657,8 @@ void ModuleRenderer3D::Draw(myMesh* mesh, float4x4 transform)
 		glColor3f(1.f, 1.f, 1.f);
 	}
 
+	
+
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->id_normal);
 	glNormalPointer(GL_FLOAT, 0, NULL);
 	
@@ -692,4 +695,31 @@ void ModuleRenderer3D::Draw(myMesh* mesh, float4x4 transform)
 	}
 
 	glPopMatrix();
+
+	if (!drawAABB)
+	{
+		go->mesh->DrawAABB();
+		/*glLineWidth(1.5f);
+		glBegin(GL_LINES);
+		glColor3f(1, 0, 1);
+		
+		for (uint i = 0; i < 12; i++)
+		{
+			float vX = mesh->aabb.Edge(i).a.x;
+			float vY = mesh->aabb.Edge(i).a.y;
+			float vZ = mesh->aabb.Edge(i).a.z;
+
+			float v2X = mesh->aabb.Edge(i).b.x;
+			float v2Y = mesh->aabb.Edge(i).b.y;
+			float v2Z = mesh->aabb.Edge(i).b.z;
+
+			glVertex3f(vX, vY, vZ);
+			glVertex3f(v2X, v2Y, v2Z);
+		}
+
+		glEnd();
+		glColor3f(1, 1, 1);*/
+		
+
+	}
 }

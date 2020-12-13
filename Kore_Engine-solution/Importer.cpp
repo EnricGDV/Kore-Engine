@@ -105,6 +105,9 @@ std::vector<myMesh> Importer::LoadMeshes(const char* file_path)
 						LOG("New mesh with %d vertices", m.num_vertices);
 						App->ConsoleLog("New mesh with %d vertices", m.num_vertices);
 
+						//Creating AABB
+						m.CreateAABB();
+						childgo->mesh->bbox = m.aabb;
 
 						//Importing Normals
 						if (scene->mMeshes[index]->HasNormals())

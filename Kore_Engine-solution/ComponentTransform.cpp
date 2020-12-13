@@ -39,6 +39,11 @@ Quat ComponentTransform::GetRotQuat() const
 	return rotQuat;
 }
 
+float4x4 ComponentTransform::GetMatrix() const
+{
+	return matrix;
+}
+
 float3 ComponentTransform::GetScale() const
 {
 	return scale;

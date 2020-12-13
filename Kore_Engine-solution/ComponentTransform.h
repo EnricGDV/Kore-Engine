@@ -15,8 +15,9 @@ public:
 	float3 GetPos() const;
 	float3 GetRot() const;
 	float3 GetScale() const;
-
+	
 	Quat GetRotQuat() const;
+	float4x4 GetMatrix() const;
 
 	void UpdateMatrix();
 

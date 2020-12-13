@@ -4,6 +4,7 @@
 
 #include "Libraries/MathGeoLib/include/MathBuildConfig.h"
 #include "Libraries/MathGeoLib/include/MathGeoLib.h"
+#include "Libraries/MathGeoLib/include/Geometry/AABB.h"
 
 class myMesh;
 
@@ -11,8 +12,13 @@ class ComponentMesh : public Component
 {
 public:
 
-	ComponentMesh(GameObject* GameObj);
+	ComponentMesh(GameObject* owner);
 	~ComponentMesh();
+
+	void DrawAABB();
+
+	bool Update();
+	math::AABB GetAABB();
 
 public:
 
@@ -34,5 +40,9 @@ public:
 	uint* materialIndices = nullptr;
 	uint materialid;
 	const char* materialpath;
+
+	math::AABB bbox;
+	math::AABB Gbbox;
+	math::OBB obb;
 };
 

@@ -1,6 +1,9 @@
 #include "Globals.h"
 #include <iostream>
 
+#include "Libraries/MathGeoLib/include/Geometry/AABB.h"
+#include "Libraries/MathGeoLib/include/Math/float4x4.h"
+
 class myTexture
 {
 public:
@@ -20,7 +23,7 @@ class myMesh
 public:
 	myMesh();
 	~myMesh();
-
+	
 	uint id_index = 0;
 	uint num_indices = 0;
 
@@ -38,6 +41,14 @@ public:
 	uint materialid;
 	const char* materialpath;
 	//myTexture* material;
+
+	void CreateAABB()
+	{
+		aabb.SetNegativeInfinity();
+		aabb.Enclose((float3*)vertices, num_vertices);
+	}
+
+	math::AABB aabb;
 };
 
 

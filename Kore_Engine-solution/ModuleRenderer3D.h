@@ -30,7 +30,7 @@ public:
 	void GenerateMeshes();
 	void GenerateTextures();
 
-	void Draw(myMesh* mesh, float4x4 transform);
+	void Draw(myMesh* mesh, float4x4 transform, GameObject* go);
 
 public:
 
@@ -65,7 +65,7 @@ public:
 	bool drawNormals = false;
 	bool isCheckerTex = false;
 	bool drawTex = true;
-
+	bool drawAABB = false;
 	float brightness = 1.f;
 	bool debug_draw = false;
 };
