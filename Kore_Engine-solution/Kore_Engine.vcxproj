@@ -67,7 +67,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\Libraries\MathGeoLib\include;.\Libraries\Assimp\include;.\Libraries\SDL\include;.\Libraries\Glew\include;.\Libraries\DevIL\include;.\Libraries\PhysFS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -77,7 +77,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>.\Libraries\MathGeoLib\libx86\Debug;.\Libraries\Assimp\libx86;.\Libraries\Glew\libx86;.\Libraries\DevIL\libx86;.\Libraries\PhysFS\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\Libraries\MathGeoLib\libx86\Release;.\Libraries\Assimp\libx86;.\Libraries\Glew\libx86;.\Libraries\DevIL\libx86;.\Libraries\PhysFS\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>MathGeoLib.lib;glew32.lib;assimp.lib;DevIL.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
