@@ -22,6 +22,7 @@ public:
 	bool CleanUp();
 
 	GameObject* CreateGameObject();
+	void Save();
 
 public:
 
@@ -35,5 +36,7 @@ public:
 	bool isSelected = false;
 	GameObject* selectedGameObject;
 	GameObject* rootGameObject;
+
+	
 
 };

@@ -396,6 +396,8 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 {
 	unsigned int ret = 0;
 
+	PHYSFS_permitSymbolicLinks(1);
+
 	bool overwrite = PHYSFS_exists(file) != 0;
 	PHYSFS_file* fs_file = (append) ? PHYSFS_openAppend(file) : PHYSFS_openWrite(file);
 
@@ -405,30 +407,42 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 		if (written != size)
 		{
 			LOG("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
+			App->ConsoleLog("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
 		}
 		else
 		{
 			if (append == true)
 			{
 				LOG("Added %u data to [%s%s]", size, GetWriteDir(), file);
+				App->ConsoleLog("Added %u data to [%s%s]", size, GetWriteDir(), file);
 			}	
 			else if (overwrite == true)
 			{
 				LOG("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
+				App->ConsoleLog("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
 			}
 			else
 			{
 				LOG("New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
+				App->ConsoleLog("New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
 			}
 
 			ret = written;
 		}
 
 		if (PHYSFS_close(fs_file) == 0)
+		{
 			LOG("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
+			App->ConsoleLog("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
+		}
+			
 	}
 	else
+	{
+		App->ConsoleLog("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
 		LOG("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
+	}
+		
 
 	return ret;
 }

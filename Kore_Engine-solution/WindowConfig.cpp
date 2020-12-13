@@ -37,7 +37,7 @@ bool WindowConfig::Draw()
 
 			if (ImGui::MenuItem("Save"))
 			{
-
+				App->scene_intro->Save();
 			}
 
 			if (ImGui::MenuItem("Load"))
