@@ -41,8 +41,8 @@ public:
 	uint materialid;
 	const char* materialpath;
 
-	math::AABB bbox;
-	math::AABB Gbbox;
-	math::OBB obb;
+	float3* _vertices = nullptr;
+	AABB bbox;
+
 };
 

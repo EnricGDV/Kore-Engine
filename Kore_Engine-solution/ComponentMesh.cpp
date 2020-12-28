@@ -4,7 +4,7 @@
 
 ComponentMesh::ComponentMesh(GameObject* owner) :Component(owner, Type::MESH)
 {
-
+	_vertices = new float3[num_vertices];
 }
 
 ComponentMesh::~ComponentMesh()
@@ -15,11 +15,10 @@ ComponentMesh::~ComponentMesh()
 
 bool ComponentMesh::Update()
 {
-	obb = bbox;
-	obb.Transform(owner->transform->GetMatrix());
 
-	Gbbox.SetNegativeInfinity();
-	Gbbox.Enclose(obb);
+
+	bbox.SetNegativeInfinity();
+	bbox.Enclose(_vertices, num_vertices);
 
 	return true;
 }
@@ -37,13 +36,13 @@ void ComponentMesh::DrawAABB()
 
 	for (uint i = 0; i < 12; i++)
 	{
-		float vX = Gbbox.Edge(i).a.x;
-		float vY = Gbbox.Edge(i).a.y;
-		float vZ = Gbbox.Edge(i).a.z;
+		float vX = bbox.Edge(i).a.x;
+		float vY = bbox.Edge(i).a.y;
+		float vZ = bbox.Edge(i).a.z;
 
-		float v2X = Gbbox.Edge(i).b.x;
-		float v2Y = Gbbox.Edge(i).b.y;
-		float v2Z = Gbbox.Edge(i).b.z;
+		float v2X = bbox.Edge(i).b.x;
+		float v2Y = bbox.Edge(i).b.y;
+		float v2Z = bbox.Edge(i).b.z;
 
 		glVertex3f(vX, vY, vZ);
 		glVertex3f(v2X, v2Y, v2Z);
