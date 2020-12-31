@@ -22,6 +22,7 @@ You can check this project at https://github.com/EnricGDV/Kore-Engine
 #### Configuration:
 - You can use Configuration to change the settings of the different modules of the Engine, check out some of their information and toy with the different rendering and
   window options.
+- You can also use it to save the texture being used as a .ket (Kore Engine Texture)
 
 #### Console:
 - Any relevant message to your use of the Engine will show up in the console. Watch out for errors!
