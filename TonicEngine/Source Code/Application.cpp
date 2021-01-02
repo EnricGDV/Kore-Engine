@@ -13,6 +13,7 @@
 #include "JsonImporter.h"
 #include "ModuleTime.h"
 #include "ModuleResources.h"
+#include "ModuleUI.h"
 
 Application::Application()
 {
@@ -27,6 +28,7 @@ Application::Application()
 	tex_imp = new TextureImporter(this);
 	time = new ModuleTime(this);
 	resources = new ModuleResources(this);
+	ui = new ModuleUI(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
