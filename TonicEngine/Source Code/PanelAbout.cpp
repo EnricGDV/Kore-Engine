@@ -36,7 +36,7 @@ bool PanelAbout::Draw()
 		{
 			ImGui::Image((ImTextureID*)icon->tex.id, ImVec2(35, 35), ImVec2(0, 1), ImVec2(1, 0)); ImGui::SameLine();
 			
-			ImGui::Text("%s by Pol Casau and Xavi Marin", SDL_GetWindowTitle(App->window->window));
+			ImGui::Text("%s by Enric-G. Duran and Clara Ratera", SDL_GetWindowTitle(App->window->window));
 			ImGui::Separator();
 
 			ImGui::Text("This is a 3D Game Engine developed during our Game Design and Development Bachelor's Degree.");
@@ -45,11 +45,11 @@ bool PanelAbout::Draw()
 			if (ImGui::TreeNodeEx("Github Links", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth))
 			{
 				if (ImGui::Button("Repository"))
-					App->RequestBrowser("https://github.com/xavimarin35/TonicEngine"); ImGui::SameLine();
-				if (ImGui::Button("Pol Casau"))
-					App->RequestBrowser("https://github.com/Bullseye14"); ImGui::SameLine();
-				if (ImGui::Button("Xavi Marin"))
-					App->RequestBrowser("https://github.com/xavimarin35");
+					App->RequestBrowser("https://github.com/EnricGDV/Kore-Engine"); ImGui::SameLine();
+				if (ImGui::Button("Enric-G. Duran"))
+					App->RequestBrowser("https://github.com/EnricGDV"); ImGui::SameLine();
+				if (ImGui::Button("Clara Ratera"))
+					App->RequestBrowser("https://github.com/RustikTie");
 
 				ImGui::TreePop();
 			}
@@ -85,7 +85,7 @@ bool PanelAbout::Draw()
 			ImGui::Separator();
 
 			ImGui::Text("MIT License");
-			ImGui::Text("Copyright (c) 2020 Xavi Marin Sola and Pol Casau Civit");
+			ImGui::Text("Copyright (c) 2020 Enric-G. Duran and Clara Ratera");
 			ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy of this");
 			ImGui::Text("software and associated documentation files (the 'Software'), to deal in the Software without");
 			ImGui::Text("restriction, including without limitation the rights to use, copy, modify, merge, publish,");

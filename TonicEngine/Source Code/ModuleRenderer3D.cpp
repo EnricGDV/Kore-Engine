@@ -49,6 +49,8 @@ bool ModuleRenderer3D::Init()
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
+		// args: left, right, bottom, top, near, far
+		glOrtho(0.0f, 640, 480, 0.0f, 1.0f, -1.0f); // SDL Style 0,0 -> 640,480
 
 		//Check for error
 		GLenum error = glGetError();
