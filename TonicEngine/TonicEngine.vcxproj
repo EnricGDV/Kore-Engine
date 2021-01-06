@@ -87,13 +87,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source Code\Component2DTransform.h" />
+    <ClInclude Include="Source Code\ComponentButton.h" />
     <ClInclude Include="Source Code\ComponentCamera.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
+    <ClInclude Include="Source Code\ComponentCanvas.h" />
+    <ClInclude Include="Source Code\ComponentImage.h" />
     <ClInclude Include="Source Code\ComponentMesh.h" />
+    <ClInclude Include="Source Code\ComponentProgressBar.h" />
+    <ClInclude Include="Source Code\ComponentTextBox.h" />
     <ClInclude Include="Source Code\ComponentTexture.h" />
     <ClInclude Include="Source Code\ComponentTransform.h" />
+    <ClInclude Include="Source Code\ComponentWindow.h" />
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\JsonImporter.h" />
     <ClInclude Include="Source Code\Libraries\glew\include\GL\glew.h" />
@@ -210,13 +217,20 @@
     <ClInclude Include="Source Code\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Code\Component2DTransform.cpp" />
+    <ClCompile Include="Source Code\ComponentButton.cpp" />
     <ClCompile Include="Source Code\ComponentCamera.cpp" />
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
+    <ClCompile Include="Source Code\ComponentCanvas.cpp" />
+    <ClCompile Include="Source Code\ComponentImage.cpp" />
     <ClCompile Include="Source Code\ComponentMesh.cpp" />
+    <ClCompile Include="Source Code\ComponentProgressBar.cpp" />
+    <ClCompile Include="Source Code\ComponentTextBox.cpp" />
     <ClCompile Include="Source Code\ComponentTexture.cpp" />
     <ClCompile Include="Source Code\ComponentTransform.cpp" />
+    <ClCompile Include="Source Code\ComponentWindow.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\Libraries\glew\src\glew.c" />
     <ClCompile Include="Source Code\glmath.cpp" />
